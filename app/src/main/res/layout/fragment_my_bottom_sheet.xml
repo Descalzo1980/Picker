@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="80dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="180dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAddContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_add_content" />
+
+</LinearLayout>
+
+
+
