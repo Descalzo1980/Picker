@@ -44,15 +44,15 @@ class MyBottomSheetFragment : BottomSheetDialogFragment() {
         addContentAdapter = AddContentAdapter { itemType ->
             when (itemType) {
                 AddContentType.GALLERY -> {
-                    // Обработка нажатия на элемент
+
                 }
 
                 AddContentType.FILE -> {
-                    // Обработка нажатия на элемент
+
                 }
 
                 AddContentType.LOCATION -> {
-                    // Обработка нажатия на элемент
+
                 }
             }
         }
@@ -63,7 +63,7 @@ class MyBottomSheetFragment : BottomSheetDialogFragment() {
         binding?.rvAddContent?.apply {
             val spanCount = PickerFragment.LENGTH_TYPES
             val layoutManager =
-                GridLayoutManager(context, spanCount, GridLayoutManager.HORIZONTAL, false)
+                GridLayoutManager(context, spanCount, GridLayoutManager.VERTICAL, false)
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return PickerFragment.DIVIDER_SPAN
@@ -71,6 +71,7 @@ class MyBottomSheetFragment : BottomSheetDialogFragment() {
             }
             this.layoutManager = layoutManager
             itemAnimator = null
+            adapter = addContentAdapter
         }
     }
 
