@@ -24,6 +24,20 @@ class RecyclerViewAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun onBindViewHolder(
+        holder: CustomViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            if (payloads[0] == true) {
+                holder.bindFavoriteState()
+            }
+        }
+    }
+
     sealed class Types {
         data class MediaItem(val uri: String?, val chooseIndex: Int, val position: Int)
     }

@@ -26,7 +26,7 @@ class KirillBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val spanCount = 3
-        val layoutManager = CustomGridLayoutManager(requireContext(), spanCount)
+        val layoutManager = GridLayoutManager(requireContext(), spanCount)
         val adapter = RecyclerViewAdapter(object : RecyclerViewAdapter.Listener {
             override fun onClick(chooseIndex: Int, callback: (Int) -> Unit) {
                 if (calculateIndex(chooseIndex)) {

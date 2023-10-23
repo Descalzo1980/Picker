@@ -10,4 +10,8 @@ class MediaItemDiffCallback : DiffUtil.ItemCallback<RecyclerViewAdapter.Types.Me
     override fun areContentsTheSame(oldItem: RecyclerViewAdapter.Types.MediaItem, newItem: RecyclerViewAdapter.Types.MediaItem): Boolean {
         return oldItem == newItem
     }
+
+    override fun getChangePayload(oldItem: RecyclerViewAdapter.Types.MediaItem, newItem: RecyclerViewAdapter.Types.MediaItem): Any? {
+        return if (oldItem.position != newItem.position) true else null
+    }
 }

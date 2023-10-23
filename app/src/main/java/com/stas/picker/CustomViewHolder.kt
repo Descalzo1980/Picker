@@ -31,4 +31,8 @@ class CustomViewHolder(
             }
         }
     }
+
+    fun bindFavoriteState() {
+        binding.ivMediaItem.animate()
+    }
 }
