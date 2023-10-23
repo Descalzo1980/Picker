@@ -9,16 +9,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.stas.picker.databinding.FragmentMyBottomSheetBinding
 
 
-class MyBottomSheetFragment : BottomSheetDialogFragment() {
+class MyBottomSheetFragment(private val pickerFragment: PickerFragment) : BottomSheetDialogFragment() {
 
     private var binding: FragmentMyBottomSheetBinding? = null
     private lateinit var addContentAdapter: AddContentAdapter
+    lateinit var list: List<RecyclerViewAdapter.Types.MediaItem>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpAddContentAdapter()
-
     }
 
 
@@ -44,7 +44,7 @@ class MyBottomSheetFragment : BottomSheetDialogFragment() {
         addContentAdapter = AddContentAdapter { itemType ->
             when (itemType) {
                 AddContentType.GALLERY -> {
-
+                    pickerFragment.showSecondDialog()
                 }
 
                 AddContentType.FILE -> {
