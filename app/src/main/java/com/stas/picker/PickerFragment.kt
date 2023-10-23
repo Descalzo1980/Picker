@@ -3,6 +3,7 @@ package com.stas.picker
 import android.content.ContentUris
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,7 @@ class PickerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val bhd = MyBottomSheetFragment(this)
         binding?.showBottomSheetButton?.setOnClickListener {
-            bhd.show(childFragmentManager, null)
+            showSecondDialog()
         }
 
     }
@@ -42,8 +43,9 @@ class PickerFragment : Fragment() {
             }
         })
         binding?.showBottomSheetButton?.setOnClickListener {
-            val dialog = MyBottomSheetFragment(this)
+            val dialog = KirillBottomSheet()
             dialog.list = test().toMediaItem()
+            Log.d("MYTAGMYTAG", "list size = ${dialog.list.size}")
             val gridLayout = GridLayoutManager(requireContext(), 3)
             binding?.revMediaPicker?.adapter = adapter
             binding?.revMediaPicker?.layoutManager = gridLayout
