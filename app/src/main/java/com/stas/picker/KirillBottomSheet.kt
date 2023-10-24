@@ -49,12 +49,22 @@ class KirillBottomSheet : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-//        dialog?.let {
-//            val bottomSheet = it.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
-//            val behavior = BottomSheetBehavior.from(bottomSheet)
-//            behavior.peekHeight = (requireActivity().resources.displayMetrics.heightPixels * 0.5).toInt()
-//            behavior.state = BottomSheetBehavior.STATE_EXPANDED
-//        }
+        dialog?.let {
+            val bottomSheet = it.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
+            val behavior = BottomSheetBehavior.from(bottomSheet)
+            behavior.peekHeight = (requireActivity().resources.displayMetrics.heightPixels * 0.5).toInt()
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
     }
 
     private fun calculateIndex(chooseIndex: Int): Boolean {

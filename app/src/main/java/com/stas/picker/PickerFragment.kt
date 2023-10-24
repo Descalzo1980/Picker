@@ -4,15 +4,24 @@ import android.content.ContentUris
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.Slide
+import androidx.transition.Transition
+import androidx.transition.TransitionListenerAdapter
+import androidx.transition.TransitionManager
+import androidx.transition.Visibility
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.stas.picker.databinding.FragmentPickerBinding
 
 class PickerFragment : Fragment() {
 
     private var binding: FragmentPickerBinding? = null
+    private var isButtonsBarAnimated = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,20 +40,63 @@ class PickerFragment : Fragment() {
     }
 
     fun showSecondDialog() {
+        binding?.showBottomSheetButton?.setOnClickListener {
+//            val dialog = KirillBottomSheet()
+//            dialog.list = test().toMediaItem()
+//            Log.d("MYTAGMYTAG", "list size = ${dialog.list.size}")
+//            dialog.show(childFragmentManager, null)
+//            showBottomNavigation(true)
+            val behavior = BottomSheetBehavior.from(binding!!.bottomSheet.root)
+            behavior.peekHeight = (resources.displayMetrics.heightPixels * 0.5).toInt()
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            behavior.isHideable = true
+            test1()
+            showBottomNavigation(true)
+        }
+    }
+
+    fun test1() {
+        val spanCount = 3
+        val layoutManager = GridLayoutManager(requireContext(), spanCount)
         val adapter = RecyclerViewAdapter(object : RecyclerViewAdapter.Listener {
             override fun onClick(chooseIndex: Int, callback: (Int) -> Unit) {
-//                if (calculateIndex(chooseIndex)) {
-//                    callback.invoke(chooseIndex)
-//                } else {
-//                    Unit
-//                }
+                if (calculateIndex(chooseIndex)) {
+                    callback.invoke(chooseIndex)
+                } else {
+                    Unit
+                }
             }
         })
-        binding?.showBottomSheetButton?.setOnClickListener {
-            val dialog = KirillBottomSheet()
-            dialog.list = test().toMediaItem()
-            Log.d("MYTAGMYTAG", "list size = ${dialog.list.size}")
-            dialog.show(childFragmentManager, null)
+        binding?.apply {
+            bottomSheet.revMediaPicker.adapter = adapter
+            bottomSheet.revMediaPicker.layoutManager = layoutManager
+        }
+        adapter.submitList(test().toMediaItem())
+    }
+
+    private fun showBottomNavigation(visibility: Boolean) {
+        if (isButtonsBarAnimated) return
+        binding?.apply {
+            val transition = Slide(Gravity.BOTTOM).apply {
+                duration = DEFAULT_TRANSITION_DURATION
+                addTarget(bvNavigation)
+            }.addListener(object : TransitionListenerAdapter() {
+                override fun onTransitionStart(transition: Transition) {
+                    super.onTransitionStart(transition)
+                    isButtonsBarAnimated = true
+                }
+
+                override fun onTransitionEnd(transition: Transition) {
+                    super.onTransitionEnd(transition)
+                    isButtonsBarAnimated = false
+                }
+            })
+            TransitionManager.beginDelayedTransition(bvNavigation, transition)
+            bvNavigation.visibility = if (visibility) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 
@@ -86,5 +138,6 @@ class PickerFragment : Fragment() {
     companion object {
         const val LENGTH_TYPES = 3
         const val DIVIDER_SPAN = 1
+        const val DEFAULT_TRANSITION_DURATION = 300L
     }
 }
