@@ -39,14 +39,9 @@ class PickerFragment : Fragment() {
 
     }
 
-    fun showSecondDialog() {
-        binding?.showBottomSheetButton?.setOnClickListener {
-//            val dialog = KirillBottomSheet()
-//            dialog.list = test().toMediaItem()
-//            Log.d("MYTAGMYTAG", "list size = ${dialog.list.size}")
-//            dialog.show(childFragmentManager, null)
-//            showBottomNavigation(true)
-            val behavior = BottomSheetBehavior.from(binding!!.bottomSheet.root)
+    private fun showSecondDialog() = binding?.apply{
+        showBottomSheetButton.setOnClickListener {
+            val behavior = BottomSheetBehavior.from(bottomSheet.root)
             behavior.peekHeight = (resources.displayMetrics.heightPixels * 0.5).toInt()
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             behavior.isHideable = true
@@ -55,8 +50,9 @@ class PickerFragment : Fragment() {
         }
     }
 
-    fun test1() {
+    private fun test1() {
         val spanCount = 3
+        val spacing = 2
         val layoutManager = GridLayoutManager(requireContext(), spanCount)
         val adapter = RecyclerViewAdapter(object : RecyclerViewAdapter.Listener {
             override fun onClick(chooseIndex: Int, callback: (Int) -> Unit) {
@@ -67,12 +63,15 @@ class PickerFragment : Fragment() {
                 }
             }
         })
+        val itemDecoration = RecyclerItemDecoration(spanCount, spacing)
         binding?.apply {
             bottomSheet.revMediaPicker.adapter = adapter
             bottomSheet.revMediaPicker.layoutManager = layoutManager
+            bottomSheet.revMediaPicker.addItemDecoration(itemDecoration)
         }
         adapter.submitList(test().toMediaItem())
     }
+
 
     private fun showBottomNavigation(visibility: Boolean) {
         if (isButtonsBarAnimated) return
@@ -85,7 +84,6 @@ class PickerFragment : Fragment() {
                     super.onTransitionStart(transition)
                     isButtonsBarAnimated = true
                 }
-
                 override fun onTransitionEnd(transition: Transition) {
                     super.onTransitionEnd(transition)
                     isButtonsBarAnimated = false
