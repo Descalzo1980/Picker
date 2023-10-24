@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import com.stas.picker.databinding.FragmentPickerBinding
 
 class PickerFragment : Fragment() {
@@ -25,7 +24,6 @@ class PickerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bhd = MyBottomSheetFragment(this)
         binding?.showBottomSheetButton?.setOnClickListener {
             showSecondDialog()
         }
@@ -46,9 +44,6 @@ class PickerFragment : Fragment() {
             val dialog = KirillBottomSheet()
             dialog.list = test().toMediaItem()
             Log.d("MYTAGMYTAG", "list size = ${dialog.list.size}")
-            val gridLayout = GridLayoutManager(requireContext(), 3)
-            binding?.revMediaPicker?.adapter = adapter
-            binding?.revMediaPicker?.layoutManager = gridLayout
             dialog.show(childFragmentManager, null)
         }
     }

@@ -15,8 +15,8 @@ class CustomViewHolder(
             Glide.with(itemView)
                 .load(item.uri)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(ivMediaItem)
             ivMediaItem.setOnClickListener {

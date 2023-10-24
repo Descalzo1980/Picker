@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView.OnScrollListener
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.stas.picker.databinding.BottomSheetBinding
 
@@ -41,6 +45,16 @@ class KirillBottomSheet : BottomSheetDialogFragment() {
         dialog?.layoutInflater
         adapter.submitList(list)
         dialog?.show()
+    }
+
+    override fun onStart() {
+        super.onStart()
+//        dialog?.let {
+//            val bottomSheet = it.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
+//            val behavior = BottomSheetBehavior.from(bottomSheet)
+//            behavior.peekHeight = (requireActivity().resources.displayMetrics.heightPixels * 0.5).toInt()
+//            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+//        }
     }
 
     private fun calculateIndex(chooseIndex: Int): Boolean {
