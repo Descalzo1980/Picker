@@ -19,5 +19,4 @@ class RecyclerItemDecoration(private val spanCount: Int, private val spacing: In
         outRect.top = if (position < spanCount) spacing else 0
         outRect.bottom = spacing
     }
-
 }

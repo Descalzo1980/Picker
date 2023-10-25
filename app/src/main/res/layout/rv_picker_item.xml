@@ -15,6 +15,7 @@
             android:id="@+id/ivMediaItem"
             android:layout_width="116dp"
             android:layout_height="116dp"
+            app:layout_constraintDimensionRatio="H16:9"
             android:src="@drawable/ic_placeholder"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,9 +41,5 @@
                 android:textSize="12sp" />
 
         </androidx.cardview.widget.CardView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </LinearLayout>
