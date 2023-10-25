@@ -10,7 +10,7 @@ class RecyclerViewAdapter(
 ) : ListAdapter<RecyclerViewAdapter.Types.MediaItem, CustomViewHolder>(MediaItemDiffCallback()) {
 
     interface Listener {
-        fun onClick(chooseIndex: Int, callback: (Int) -> Unit)
+        fun onClick(mediaItem: Types.MediaItem)
     }
 
     var count = 0

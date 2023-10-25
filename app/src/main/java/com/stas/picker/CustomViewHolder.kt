@@ -20,14 +20,7 @@ class CustomViewHolder(
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(ivMediaItem)
             ivMediaItem.setOnClickListener {
-                listener.onClick(item.chooseIndex) { callbackPosition ->
-
-                }
-            }
-            ivItemCount.setOnClickListener {
-                listener.onClick(item.chooseIndex) { callbackPosition ->
-
-                }
+                listener.onClick(item)
             }
         }
     }
