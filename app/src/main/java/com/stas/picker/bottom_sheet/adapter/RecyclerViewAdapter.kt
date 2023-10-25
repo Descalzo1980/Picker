@@ -1,8 +1,9 @@
-package com.stas.picker
+package com.stas.picker.bottom_sheet.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.stas.picker.bottom_sheet.viewholder.CustomViewHolder
 import com.stas.picker.databinding.RvPickerItemBinding
 
 class RecyclerViewAdapter(
@@ -13,11 +14,10 @@ class RecyclerViewAdapter(
         fun onClick(mediaItem: Types.MediaItem)
     }
 
-    var count = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val binding = RvPickerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CustomViewHolder(binding, listener)
+        return CustomViewHolder(binding, listener = listener)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {

@@ -1,8 +1,10 @@
-package com.stas.picker
+package com.stas.picker.bottom_sheet.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.stas.picker.R
+import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.RvPickerItemBinding
 
 class CustomViewHolder(
