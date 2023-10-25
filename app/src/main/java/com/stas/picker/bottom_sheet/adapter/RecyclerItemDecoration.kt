@@ -1,4 +1,4 @@
-package com.stas.picker
+package com.stas.picker.bottom_sheet.adapter
 
 import android.graphics.Rect
 import android.view.View

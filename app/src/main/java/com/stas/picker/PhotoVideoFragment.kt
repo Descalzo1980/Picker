@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.stas.picker.databinding.FragmentPhotoVideoBinding
-import com.stas.picker.databinding.FragmentPickerBinding
 
 class PhotoVideoFragment : Fragment() {
 
     private var binding: FragmentPhotoVideoBinding? = null
 
-    private val photoVideoFragment: Boolean by lazy { arguments?.getString(PickerFragment.PROTO_VIDEO_ITEM) != null }
+    private val photoVideoFragment: Boolean by lazy { arguments?.getString(PickerFragment.PHOTO_VIDEO_ITEM) != null }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +26,7 @@ class PhotoVideoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val photo = binding?.ivMediaItem
         if (photoVideoFragment) {
-            val photoPath = arguments?.getString(PickerFragment.PROTO_VIDEO_ITEM)
+            val photoPath = arguments?.getString(PickerFragment.PHOTO_VIDEO_ITEM)
             if (!photoPath.isNullOrEmpty()) {
                 Glide.with(this)
                     .load(photoPath)

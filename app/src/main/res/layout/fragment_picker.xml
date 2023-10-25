@@ -15,24 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-    
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/test"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/bvNavigation"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <include
-            android:id="@+id/bottomSheet"
-            layout="@layout/bottom_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_anchorGravity="bottom"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bvNavigation"
@@ -40,8 +22,6 @@
         android:layout_height="wrap_content"
         app:menu="@menu/navigation_menu"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
