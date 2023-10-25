@@ -15,6 +15,7 @@
             android:id="@+id/ivMediaItem"
             android:layout_width="116dp"
             android:layout_height="116dp"
+            android:clickable="true"
             app:layout_constraintDimensionRatio="H16:9"
             android:src="@drawable/ic_placeholder"
             app:layout_constraintStart_toStartOf="parent"
