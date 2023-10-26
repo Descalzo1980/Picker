@@ -1,14 +1,28 @@
 package com.stas.picker.utils
 
-import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
+import com.stas.picker.model.MediaFile
+import com.stas.picker.model.MediaPath
+import java.util.Date
 
-fun List<String?>.toMediaItem(): List<RecyclerViewAdapter.Types.MediaItem> {
-    var position = 0
-    val result = mutableListOf<RecyclerViewAdapter.Types.MediaItem>()
+
+fun List<MediaPath>.toMediaItem(): List<MediaFile> {
+    val result = mutableListOf<MediaFile>()
     result.addAll(
         this.map {
-            RecyclerViewAdapter.Types.MediaItem(it, 0, position++)
+            it.toMedia()
         }
     )
     return result
+}
+
+fun MediaPath.toMedia(): MediaFile {
+    return if (this.isVideo) {
+        MediaFile.VideoFile(this.uri, this.duration)
+    } else {
+        MediaFile.PhotoFile(this.uri)
+    }
+}
+
+fun Long.toDate(): Date {
+    return Date(this)
 }

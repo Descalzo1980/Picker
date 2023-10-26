@@ -27,4 +27,4 @@ fun showAnimation(view: View, visibility: Boolean) {
     view.visible(visibility)
 }
 
-private const val ANIMATION_DURATION = 300L
+private const val ANIMATION_DURATION = 200L

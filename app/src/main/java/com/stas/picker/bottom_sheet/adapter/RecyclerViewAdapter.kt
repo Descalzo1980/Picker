@@ -3,42 +3,59 @@ package com.stas.picker.bottom_sheet.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.stas.picker.bottom_sheet.viewholder.CustomViewHolder
-import com.stas.picker.databinding.RvPickerItemBinding
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.stas.picker.bottom_sheet.viewholder.PhotoViewHolder
+import com.stas.picker.bottom_sheet.viewholder.VideoViewHolder
+import com.stas.picker.databinding.RvPickerPhotoItemBinding
+import com.stas.picker.databinding.RvPickerVideoItemBinding
+import com.stas.picker.model.MediaFile
 
 class RecyclerViewAdapter(
     private val listener: Listener
-) : ListAdapter<RecyclerViewAdapter.Types.MediaItem, CustomViewHolder>(MediaItemDiffCallback()) {
+) : ListAdapter<MediaFile, ViewHolder>(MediaItemDiffCallback()) {
 
     interface Listener {
-        fun onClick(mediaItem: Types.MediaItem)
+        fun onClick(mediaItem: MediaFile)
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-        val binding = RvPickerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CustomViewHolder(binding, listener = listener)
-    }
-
-    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-
-    override fun onBindViewHolder(
-        holder: CustomViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
-    ) {
-        if (payloads.isEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else {
-            if (payloads[0] == true) {
-                holder.bindFavoriteState()
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        when (holder) {
+            is PhotoViewHolder -> {
+                holder.bind(currentList[position] as MediaFile.PhotoFile)
+            }
+            is VideoViewHolder -> {
+                holder.bind(currentList[position] as MediaFile.VideoFile)
             }
         }
     }
 
-    sealed class Types {
-        data class MediaItem(val uri: String?, val chooseIndex: Int, val position: Int)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ViewHolder {
+        return when (viewType) {
+            FIRST_TYPE -> {
+                PhotoViewHolder(
+                    RvPickerPhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                    listener
+                )
+            }
+            SECOND_TYPE -> {
+                VideoViewHolder(
+                    RvPickerVideoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                    listener
+                )
+            }
+            else -> {throw IllegalArgumentException()}
+        }
+    }
+
+
+    override fun getItemViewType(position: Int): Int =
+        when (currentList[position]) {
+            is MediaFile.PhotoFile -> FIRST_TYPE
+            is MediaFile.VideoFile -> SECOND_TYPE
+        }
+
+    companion object {
+        const val FIRST_TYPE = 1
+        const val SECOND_TYPE = 2
     }
 }

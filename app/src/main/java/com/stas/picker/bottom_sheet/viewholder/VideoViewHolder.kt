@@ -5,14 +5,18 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.stas.picker.R
 import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
-import com.stas.picker.databinding.RvPickerItemBinding
+import com.stas.picker.databinding.RvPickerVideoItemBinding
+import com.stas.picker.model.MediaFile
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class CustomViewHolder(
-    private val binding: RvPickerItemBinding,
+class VideoViewHolder(
+    private val binding: RvPickerVideoItemBinding,
     private val listener: RecyclerViewAdapter.Listener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: RecyclerViewAdapter.Types.MediaItem) {
+    fun bind(item: MediaFile.VideoFile) {
         binding.apply {
             Glide.with(itemView)
                 .load(item.uri)
@@ -24,6 +28,7 @@ class CustomViewHolder(
             ivMediaItem.setOnClickListener {
                 listener.onClick(item)
             }
+            tvTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(Date(item.length))
         }
     }
 

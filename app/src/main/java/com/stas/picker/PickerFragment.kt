@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.stas.picker.bottom_sheet.PickerBottomSheet
 import com.stas.picker.databinding.FragmentPickerBinding
+import com.stas.picker.model.MediaPath
+import com.stas.picker.utils.toDate
 import com.stas.picker.utils.toMediaItem
 
 class PickerFragment : Fragment() {
 
     private var binding: FragmentPickerBinding? = null
-    private var isButtonsBarAnimated = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,39 +35,45 @@ class PickerFragment : Fragment() {
 
     }
 
-    private fun getMediaUris(): List<String> {
-        val galleryMediaUrls = mutableListOf<String>()
-        val imageColumns = arrayOf(MediaStore.Images.Media._ID)
-        val videoColumns = arrayOf(MediaStore.Video.Media._ID)
-        val imageOrderBy = MediaStore.Images.Media.DATE_TAKEN
-        val videoOrderBy = MediaStore.Video.Media.DATE_TAKEN
+    private fun getMediaUris(): List<MediaPath> {
+        val galleryMediaUrls = mutableListOf<MediaPath>()
+        val imageColumns = arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATE_MODIFIED)
+        val videoColumns = arrayOf(MediaStore.Video.Media._ID, MediaStore.Video.Media.DATE_MODIFIED, MediaStore.Video.Media.DURATION)
 
         context?.contentResolver?.query(
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI, imageColumns,
-            null, null, "$imageOrderBy DESC"
+            null, null, null
         )?.use { imageCursor ->
             val idColumn = imageCursor.getColumnIndex(MediaStore.Images.Media._ID)
-
+            val dateColumn = imageCursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED)
             while (imageCursor.moveToNext()) {
                 val id = imageCursor.getLong(idColumn)
-
-                galleryMediaUrls.add(ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id).toString())
+                val date = imageCursor.getLong(dateColumn).toDate()
+                val uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id).toString()
+                galleryMediaUrls.add(MediaPath(uri, date = date))
             }
         }
+
         context?.contentResolver?.query(
             MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoColumns,
-            null, null, "$videoOrderBy DESC"
+            null, null, null
         )?.use { videoCursor ->
             val idColumn = videoCursor.getColumnIndex(MediaStore.Video.Media._ID)
+            val dateColumn = videoCursor.getColumnIndex(MediaStore.Video.Media.DATE_MODIFIED)
+            val durationColumn = videoCursor.getColumnIndex(MediaStore.Video.Media.DURATION)
             while (videoCursor.moveToNext()) {
                 val id = videoCursor.getLong(idColumn)
-                galleryMediaUrls.add(ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id).toString())
+                val date = videoCursor.getLong(dateColumn).toDate()
+                val duration = videoCursor.getLong(durationColumn)
+                val uri = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id).toString()
+                galleryMediaUrls.add(MediaPath(uri, true, date, duration))
             }
         }
-        return galleryMediaUrls
+        return galleryMediaUrls.sortedByDescending { it.date }
     }
 
+
     companion object {
-        const val PHOTO_VIDEO_ITEM = "PROTO_VIDEO_ITEM"
+        const val PHOTO_VIDEO_ITEM = "PHOTO_VIDEO_ITEM"
     }
 }
