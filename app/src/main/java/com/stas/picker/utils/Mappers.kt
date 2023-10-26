@@ -5,7 +5,7 @@ import com.stas.picker.model.MediaPath
 import java.util.Date
 
 
-fun List<MediaPath>.toMediaItem(): List<MediaFile> {
+fun List<MediaPath>.toMediaItem(): MutableList<MediaFile> {
     val result = mutableListOf<MediaFile>()
     result.addAll(
         this.map {

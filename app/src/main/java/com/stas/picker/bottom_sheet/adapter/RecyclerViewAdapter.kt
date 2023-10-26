@@ -16,7 +16,10 @@ class RecyclerViewAdapter(
 
     interface Listener {
         fun onClick(mediaItem: MediaFile)
+        fun onLongClick(mediaItem: MediaFile)
     }
+
+    private val items = mutableListOf<MediaFile>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (holder) {
@@ -33,6 +36,7 @@ class RecyclerViewAdapter(
         return when (viewType) {
             FIRST_TYPE -> {
                 PhotoViewHolder(
+                    this,
                     RvPickerPhotoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
                     listener
                 )
@@ -44,6 +48,41 @@ class RecyclerViewAdapter(
                 )
             }
             else -> {throw IllegalArgumentException()}
+        }
+    }
+
+    fun test(mediaFile: MediaFile.PhotoFile) {
+        if (mediaFile.choosePosition == 0) {
+            mediaFile.choosePosition = items.size + 1
+            val list = currentList.toMutableList()
+            val index = list.indexOf(mediaFile)
+            items.add(mediaFile)
+            list.set(index, mediaFile)
+            submitList(list)
+            notifyItemChanged(index)
+        } else {
+            val list = currentList.toMutableList()
+            var count = if (items.size > 1) {
+                1
+            } else {
+                0
+            }
+            mediaFile.choosePosition = 0
+            items.remove(mediaFile)
+            items.map { (it as MediaFile.PhotoFile).choosePosition = 0 }
+            items.map { (it as MediaFile.PhotoFile).choosePosition = count++ }
+            val index = list.indexOf(mediaFile)
+            list.set(index, mediaFile)
+            submitList(list)
+            notifyItemChanged(index)
+            for (item in items) {
+                if (list.contains(item)) {
+                    val index = list.indexOf(item)
+                    list.set(index, item)
+                    submitList(list)
+                    notifyItemChanged(index)
+                }
+            }
         }
     }
 

@@ -19,7 +19,10 @@ import com.stas.picker.utils.showAnimation
 class PickerBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var binding: PickerBottomSheetBinding
-    lateinit var list: List<MediaFile>
+    lateinit var list: MutableList<MediaFile>
+    private var itemsList = mutableListOf<MediaFile>()
+    private var counter = 0
+    private var adapter: RecyclerViewAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +36,7 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = GridLayoutManager(requireContext(), SPAN_COUNT)
-        val adapter = RecyclerViewAdapter(object : RecyclerViewAdapter.Listener {
+        adapter = RecyclerViewAdapter(object : RecyclerViewAdapter.Listener {
             override fun onClick(mediaItem: MediaFile) {
 //                findNavController().navigate(
 //                    R.id.action_pickerFragment_to_photoVideoFragment,
@@ -42,12 +45,17 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
 //                    )
 //                )
             }
+
+            override fun onLongClick(mediaItem: MediaFile) {
+                calculatePosition(mediaItem)
+            }
         })
+
         val decorator = RecyclerItemDecoration(SPAN_COUNT, SPACING)
         binding.revMediaPicker.adapter = adapter
         binding.revMediaPicker.layoutManager = layoutManager
         binding.revMediaPicker.addItemDecoration(decorator)
-        adapter.submitList(list)
+        adapter?.submitList(list)
     }
 
     override fun onStart() {
@@ -75,6 +83,22 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
             }.apply {
                 binding.root.post {onSlide(binding.root.parent as View, 0f)}
             })
+        }
+    }
+
+    private fun calculatePosition(mediaFile: MediaFile): Boolean {
+        val file = mediaFile as MediaFile.PhotoFile
+        return if (file.choosePosition == 0) {
+            file.choosePosition = itemsList.size + 1
+            itemsList.add(file)
+            list[list.indexOf(file)] = file
+            adapter?.submitList(list)
+//            adapter?.notifyDataSetChanged()
+            return true
+        } else {
+            itemsList.remove(mediaFile)
+            itemsList.map { (it as MediaFile.PhotoFile).choosePosition = itemsList.size + 1 }
+            false
         }
     }
 
