@@ -6,7 +6,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.stas.picker.R
 import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.RvPickerPhotoItemBinding
-import com.stas.picker.model.MediaFile
+import com.stas.picker.model.MediaItem
 import com.stas.picker.utils.visible
 
 class PhotoViewHolder(
@@ -15,7 +15,7 @@ class PhotoViewHolder(
     private val listener: RecyclerViewAdapter.Listener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: MediaFile.PhotoFile) {
+    fun bind(item: MediaItem) {
         binding.apply {
             Glide.with(itemView)
                 .load(item.uri)
@@ -32,7 +32,7 @@ class PhotoViewHolder(
                 tvItemCount.text = item.choosePosition.toString()
             }
             ivItemCount.setOnLongClickListener {
-                adapter.test(item)
+
                 return@setOnLongClickListener true
             }
         }

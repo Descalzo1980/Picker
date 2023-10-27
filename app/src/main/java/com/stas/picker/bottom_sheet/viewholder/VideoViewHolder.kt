@@ -6,7 +6,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.stas.picker.R
 import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.RvPickerVideoItemBinding
-import com.stas.picker.model.MediaFile
+import com.stas.picker.model.MediaItem
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -16,7 +16,7 @@ class VideoViewHolder(
     private val listener: RecyclerViewAdapter.Listener
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: MediaFile.VideoFile) {
+    fun bind(item: MediaItem) {
         binding.apply {
             Glide.with(itemView)
                 .load(item.uri)

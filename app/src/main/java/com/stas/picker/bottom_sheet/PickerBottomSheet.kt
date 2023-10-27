@@ -17,14 +17,14 @@ import com.stas.picker.R
 import com.stas.picker.bottom_sheet.adapter.RecyclerItemDecoration
 import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.PickerBottomSheetBinding
-import com.stas.picker.model.MediaFile
+import com.stas.picker.model.MediaItem
 import com.stas.picker.utils.showAnimation
 
 class PickerBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var binding: PickerBottomSheetBinding
-    lateinit var list: MutableList<MediaFile>
-    private var itemsList = mutableListOf<MediaFile>()
+    lateinit var list: MutableList<MediaItem>
+    private var itemsList = mutableListOf<MediaItem>()
     private var counter = 0
     private var adapter: RecyclerViewAdapter? = null
 
@@ -41,30 +41,26 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = GridLayoutManager(requireContext(), SPAN_COUNT)
         adapter = RecyclerViewAdapter(object : RecyclerViewAdapter.Listener {
-            override fun onClick(mediaItem: MediaFile.PhotoFile) {
-                findNavController().navigate(
-                    R.id.action_pickerFragment_to_photoVideoFragment,
-                    bundleOf(
-                        PHOTO_ITEM to mediaItem.uri
+            override fun onClick(mediaItem: MediaItem) {
+                if (mediaItem.length > 0) {
+                    findNavController().navigate(
+                        R.id.action_pickerFragment_to_videoFragment,
+                        bundleOf(
+                            VIDEO_ITEM to mediaItem.uri
+                        )
                     )
-                )
-            }
-
-            override fun onClick(mediaItem: MediaFile.VideoFile) {
-                findNavController().navigate(
-                    R.id.action_pickerFragment_to_videoFragment,
-                    bundleOf(
-                        VIDEO_ITEM to mediaItem.uri
+                } else {
+                    findNavController().navigate(
+                        R.id.action_pickerFragment_to_photoVideoFragment,
+                        bundleOf(
+                            PHOTO_ITEM to mediaItem.uri
+                        )
                     )
-                )
+                }
             }
 
-            override fun onLongClick(mediaItem: MediaFile.PhotoFile) {
-                calculatePosition(mediaItem)
-            }
+            override fun onLongClick(mediaItem: MediaItem) {
 
-            override fun onLongClick(mediaItem: MediaFile.VideoFile) {
-                TODO("Not yet implemented")
             }
         })
 
@@ -100,22 +96,6 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
             }.apply {
                 binding.root.post {onSlide(binding.root.parent as View, 0f)}
             })
-        }
-    }
-
-    private fun calculatePosition(mediaFile: MediaFile): Boolean {
-        val file = mediaFile as MediaFile.PhotoFile
-        return if (file.choosePosition == 0) {
-            file.choosePosition = itemsList.size + 1
-            itemsList.add(file)
-            list[list.indexOf(file)] = file
-            adapter?.submitList(list)
-//            adapter?.notifyDataSetChanged()
-            return true
-        } else {
-            itemsList.remove(mediaFile)
-            itemsList.map { (it as MediaFile.PhotoFile).choosePosition = itemsList.size + 1 }
-            false
         }
     }
 
