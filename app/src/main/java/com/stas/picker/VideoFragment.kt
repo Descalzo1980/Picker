@@ -64,22 +64,6 @@ class VideoFragment : Fragment() {
         }
     }
 
-//    @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
-//    private fun preparePlayer() {
-//        exoPlayer = ExoPlayer.Builder(requireContext()).build()
-//        exoPlayer?.playWhenReady = true
-//        binding?.playerView?.player = exoPlayer
-//        val defaultHttpDataSourceFactory = DefaultHttpDataSource.Factory()
-//        val videoPath = arguments?.getString(videoFragment.toString())
-//        val mediaItem = MediaItem.Builder().setUri(videoPath?.toUri()).build()
-//        val mediaSource = ProgressiveMediaSource.Factory(defaultHttpDataSourceFactory)
-//            .createMediaSource(mediaItem)
-//        exoPlayer?.setMediaSource(mediaSource)
-//        exoPlayer?.seekTo(playbackPosition)
-//        exoPlayer?.playWhenReady = playWhenReady
-//        exoPlayer?.prepare()
-//    }
-
     private fun releasePlayer() {
         exoPlayer?.let { player ->
             playbackPosition = player.currentPosition
