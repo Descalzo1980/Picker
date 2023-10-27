@@ -1,6 +1,7 @@
 package com.stas.picker.bottom_sheet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,6 +81,7 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.listItems.collectLatest {
+                    Log.d("MYAGMYTAG", "currentList = $it")
                     adapter?.submitList(it)
                 }
             }

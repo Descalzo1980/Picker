@@ -15,7 +15,16 @@ class PhotoViewHolder(
     private val listener: RecyclerViewAdapter.Listener
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    lateinit var item: MediaItem
+
+    init {
+        binding.ivItemCount.setOnClickListener() {
+            listener.onLongClick(item)
+        }
+    }
+
     fun bind(item: MediaItem) {
+        this.item = item
         binding.apply {
             Glide.with(itemView)
                 .load(item.uri)
@@ -27,22 +36,20 @@ class PhotoViewHolder(
             ivMediaItem.setOnClickListener {
                 listener.onClick(item)
             }
-//            if (item.choosePosition > 0) {
-//                tvItemCount.visible(true)
-//                tvItemCount.text = item.choosePosition.toString()
-//            }
-            ivItemCount.setOnLongClickListener {
-                listener.onLongClick(item)
-                return@setOnLongClickListener true
-            }
+            bindFavoriteState(item)
         }
     }
 
     fun bindFavoriteState(item: MediaItem) {
         binding.apply {
-            tvItemCount.visible(true)
+            if (item.choosePosition > 0) {
+                tvItemCount.visible(true)
+            } else {
+                tvItemCount.visible(false)
+            }
             tvItemCount.text = item.choosePosition.toString()
         }
+
 
     }
 }

@@ -1,5 +1,6 @@
 package com.stas.picker.view_model
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.stas.picker.model.MediaItem
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ class PickerViewModel : ViewModel() {
         if (_chosenItems.value.size >= 30) {
             return
         }
-        if (mediaItem.choosePosition == 0) {
+        if (_chosenItems.value.contains(mediaItem).not()) {
             chooseItem(mediaItem)
         } else {
             removeItem(mediaItem)
@@ -24,10 +25,9 @@ class PickerViewModel : ViewModel() {
     }
 
     private fun chooseItem(item: MediaItem) {
-        item.choosePosition = getIndex()
         _listItems.value = _listItems.value.map {
             if (it.uri == item.uri) {
-                it.copy(choosePosition = item.choosePosition)
+                it.copy(choosePosition = getIndex())
             } else {
                 it
             }
@@ -36,32 +36,13 @@ class PickerViewModel : ViewModel() {
     }
 
     private fun removeItem(item: MediaItem) {
-        var counter = 0
-        if (_chosenItems.value.size < 2) {
-            _chosenItems.value.remove(item)
-            _listItems.value = _listItems.value.map {
-                if (it.uri == item.uri) {
-                    it.copy(choosePosition = 0)
-                } else {
-                    it
-                }
-            }
-        }
+        var counter = 1
         _chosenItems.value.remove(item)
-        _chosenItems.value.map { it.choosePosition = 0 }
-        _chosenItems.value.map { it.choosePosition = counter++ }
-        _listItems.value = _listItems.value.map {
+       _listItems.value = _listItems.value.map {
             if (it.uri == item.uri) {
                 it.copy(choosePosition = 0)
-            } else {
-                it
-            }
-        }
-        _listItems.value = _listItems.value.map {
-            if (_chosenItems.value.contains(it)) {
-                val index = _chosenItems.value.indexOf(it)
-                val item = _chosenItems.value[index]
-                it.copy(choosePosition = item.choosePosition)
+            } else if (it.choosePosition > 0) {
+                it.copy(choosePosition = counter++)
             } else {
                 it
             }

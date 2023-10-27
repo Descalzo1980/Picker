@@ -55,13 +55,15 @@ class RecyclerViewAdapter(
         if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
         } else {
-            if (payloads[0] == true) {
-                when (holder) {
-                    is PhotoViewHolder -> {
-                        holder.bindFavoriteState(currentList[position])
-                    }
-                    is VideoViewHolder -> {
-                        holder.bind(currentList[position])
+            payloads.forEach {
+                if (it == true) {
+                    when (holder) {
+                        is PhotoViewHolder -> {
+                            holder.bindFavoriteState(currentList[position])
+                        }
+                        is VideoViewHolder -> {
+                            holder.bind(currentList[position])
+                        }
                     }
                 }
             }
