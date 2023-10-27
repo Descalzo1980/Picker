@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -19,13 +23,16 @@ import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.PickerBottomSheetBinding
 import com.stas.picker.model.MediaItem
 import com.stas.picker.utils.showAnimation
+import com.stas.picker.view_model.PickerViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class PickerBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var binding: PickerBottomSheetBinding
     lateinit var list: MutableList<MediaItem>
     private var itemsList = mutableListOf<MediaItem>()
-    private var counter = 0
+    private val viewModel: PickerViewModel by viewModels()
     private var adapter: RecyclerViewAdapter? = null
 
     override fun onCreateView(
@@ -60,7 +67,7 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
             }
 
             override fun onLongClick(mediaItem: MediaItem) {
-
+                viewModel.handleItemClick(mediaItem)
             }
         })
 
@@ -68,7 +75,15 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
         binding.revMediaPicker.adapter = adapter
         binding.revMediaPicker.layoutManager = layoutManager
         binding.revMediaPicker.addItemDecoration(decorator)
-        adapter?.submitList(list)
+        viewModel.setList(list)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.listItems.collectLatest {
+                    adapter?.submitList(it)
+                }
+            }
+        }
     }
 
     override fun onStart() {

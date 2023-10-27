@@ -12,4 +12,8 @@ class MediaItemDiffCallback : DiffUtil.ItemCallback<MediaItem>() {
     override fun areContentsTheSame(oldItem: MediaItem, newItem: MediaItem): Boolean {
         return oldItem.hashCode() == newItem.hashCode()
     }
+
+    override fun getChangePayload(oldItem: MediaItem, newItem: MediaItem): Any? {
+        return if (oldItem.choosePosition != newItem.choosePosition) true else null
+    }
 }

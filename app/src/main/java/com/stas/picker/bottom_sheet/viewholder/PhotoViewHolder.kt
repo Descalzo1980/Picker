@@ -27,18 +27,22 @@ class PhotoViewHolder(
             ivMediaItem.setOnClickListener {
                 listener.onClick(item)
             }
-            if (item.choosePosition > 0) {
-                tvItemCount.visible(true)
-                tvItemCount.text = item.choosePosition.toString()
-            }
+//            if (item.choosePosition > 0) {
+//                tvItemCount.visible(true)
+//                tvItemCount.text = item.choosePosition.toString()
+//            }
             ivItemCount.setOnLongClickListener {
-
+                listener.onLongClick(item)
                 return@setOnLongClickListener true
             }
         }
     }
 
-    fun bindFavoriteState() {
-        binding.ivMediaItem.animate()
+    fun bindFavoriteState(item: MediaItem) {
+        binding.apply {
+            tvItemCount.visible(true)
+            tvItemCount.text = item.choosePosition.toString()
+        }
+
     }
 }

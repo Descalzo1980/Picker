@@ -51,6 +51,24 @@ class RecyclerViewAdapter(
         }
     }
 
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            if (payloads[0] == true) {
+                when (holder) {
+                    is PhotoViewHolder -> {
+                        holder.bindFavoriteState(currentList[position])
+                    }
+                    is VideoViewHolder -> {
+                        holder.bind(currentList[position])
+                    }
+                }
+            }
+        }
+
+    }
+
 //    fun test(mediaFile: MediaFile.PhotoFile) {
 //        if (mediaFile.choosePosition == 0) {
 //            mediaFile.choosePosition = items.size + 1

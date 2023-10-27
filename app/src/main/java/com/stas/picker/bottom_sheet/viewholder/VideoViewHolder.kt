@@ -29,6 +29,7 @@ class VideoViewHolder(
                 listener.onClick(item)
             }
             tvTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(Date(item.length))
+
         }
     }
 
