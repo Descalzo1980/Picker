@@ -5,10 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.stas.picker.PickerFragment.Companion.PHOTO_ITEM
+import com.stas.picker.PickerFragment.Companion.VIDEO_ITEM
 import com.stas.picker.R
 import com.stas.picker.bottom_sheet.adapter.RecyclerItemDecoration
 import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
@@ -37,17 +41,30 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = GridLayoutManager(requireContext(), SPAN_COUNT)
         adapter = RecyclerViewAdapter(object : RecyclerViewAdapter.Listener {
-            override fun onClick(mediaItem: MediaFile) {
-//                findNavController().navigate(
-//                    R.id.action_pickerFragment_to_photoVideoFragment,
-//                    bundleOf(
-//                        PHOTO_VIDEO_ITEM to mediaItem.uri
-//                    )
-//                )
+            override fun onClick(mediaItem: MediaFile.PhotoFile) {
+                findNavController().navigate(
+                    R.id.action_pickerFragment_to_photoVideoFragment,
+                    bundleOf(
+                        PHOTO_ITEM to mediaItem.uri
+                    )
+                )
             }
 
-            override fun onLongClick(mediaItem: MediaFile) {
+            override fun onClick(mediaItem: MediaFile.VideoFile) {
+                findNavController().navigate(
+                    R.id.action_pickerFragment_to_videoFragment,
+                    bundleOf(
+                        VIDEO_ITEM to mediaItem.uri
+                    )
+                )
+            }
+
+            override fun onLongClick(mediaItem: MediaFile.PhotoFile) {
                 calculatePosition(mediaItem)
+            }
+
+            override fun onLongClick(mediaItem: MediaFile.VideoFile) {
+                TODO("Not yet implemented")
             }
         })
 

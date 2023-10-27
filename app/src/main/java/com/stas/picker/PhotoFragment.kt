@@ -1,24 +1,24 @@
 package com.stas.picker
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.stas.picker.databinding.FragmentPhotoVideoBinding
+import com.stas.picker.databinding.FragmentPhotoBinding
 
-class PhotoVideoFragment : Fragment() {
+class PhotoFragment : Fragment() {
 
-    private var binding: FragmentPhotoVideoBinding? = null
+    private var binding: FragmentPhotoBinding? = null
 
-    private val photoVideoFragment: Boolean by lazy { arguments?.getString(PickerFragment.PHOTO_VIDEO_ITEM) != null }
+    private val photoVideoFragment: Boolean by lazy { arguments?.getString(PickerFragment.PHOTO_ITEM) != null }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPhotoVideoBinding.inflate(inflater, container, false)
+        binding = FragmentPhotoBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
@@ -26,11 +26,13 @@ class PhotoVideoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val photo = binding?.ivMediaItem
         if (photoVideoFragment) {
-            val photoPath = arguments?.getString(PickerFragment.PHOTO_VIDEO_ITEM)
+            val photoPath = arguments?.getString(PickerFragment.PHOTO_ITEM)
             if (!photoPath.isNullOrEmpty()) {
-                Glide.with(this)
-                    .load(photoPath)
-                    .into(photo!!)
+                if (photo != null) {
+                    Glide.with(this)
+                        .load(photoPath)
+                        .into(photo)
+                }
             }
         }
     }

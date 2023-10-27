@@ -15,8 +15,10 @@ class RecyclerViewAdapter(
 ) : ListAdapter<MediaFile, ViewHolder>(MediaItemDiffCallback()) {
 
     interface Listener {
-        fun onClick(mediaItem: MediaFile)
-        fun onLongClick(mediaItem: MediaFile)
+        fun onClick(mediaItem: MediaFile.PhotoFile)
+        fun onLongClick(mediaItem: MediaFile.PhotoFile)
+        fun onClick(mediaItem: MediaFile.VideoFile)
+        fun onLongClick(mediaItem: MediaFile.VideoFile)
     }
 
     private val items = mutableListOf<MediaFile>()

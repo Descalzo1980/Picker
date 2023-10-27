@@ -74,6 +74,7 @@ class PickerFragment : Fragment() {
 
 
     companion object {
-        const val PHOTO_VIDEO_ITEM = "PHOTO_VIDEO_ITEM"
+        const val PHOTO_ITEM = "PHOTO_ITEM"
+        const val VIDEO_ITEM = "VIDEO_ITEM"
     }
 }

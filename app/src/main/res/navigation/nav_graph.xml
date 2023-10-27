@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_pickerFragment_to_photoVideoFragment"
             app:destination="@id/photoVideoFragment" />
+        <action
+            android:id="@+id/action_pickerFragment_to_videoFragment"
+            app:destination="@id/videoFragment" />
     </fragment>
     <fragment
         android:id="@+id/photoVideoFragment"
-        android:name="com.stas.picker.PhotoVideoFragment"
+        android:name="com.stas.picker.PhotoFragment"
         android:label="fragment_photo_video"
-        tools:layout="@layout/fragment_photo_video" />
+        tools:layout="@layout/fragment_photo" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.stas.picker.VideoFragment"
+        android:label="fragment_video"
+        tools:layout="@layout/fragment_video" />
 </navigation>
