@@ -7,6 +7,7 @@ import java.util.Date
 
 fun List<MediaPath>.toMediaItem(): MutableList<MediaItem> {
     val result = mutableListOf<MediaItem>()
+    result.add(MediaItem(isCamera = true))
     result.addAll(
         this.map {
             it.toMedia()

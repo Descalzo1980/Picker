@@ -6,4 +6,5 @@
     <string name="location">Location</string>
     <string name="file">File</string>
     <string name="show_bottom_sheet">Show Bottom Sheet</string>
+    <string name="bottom_sheet_chosen">%d selected</string>
 </resources>

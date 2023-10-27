@@ -24,6 +24,19 @@
 
     </LinearLayout>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvChooseCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"
+        tools:text="@string/bottom_sheet_chosen"
+        app:layout_constraintTop_toBottomOf="@id/llDragHandle"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/revMediaPicker"
@@ -34,7 +47,7 @@
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llDragHandle"
+        app:layout_constraintTop_toBottomOf="@id/tvChooseCount"
         tools:listitem="@layout/rv_picker_photo_item" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

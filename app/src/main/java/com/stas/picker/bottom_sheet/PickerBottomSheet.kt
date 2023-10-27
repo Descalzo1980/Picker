@@ -6,6 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -23,7 +27,9 @@ import com.stas.picker.bottom_sheet.adapter.RecyclerItemDecoration
 import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.PickerBottomSheetBinding
 import com.stas.picker.model.MediaItem
+import com.stas.picker.utils.collectFlowLatest
 import com.stas.picker.utils.showAnimation
+import com.stas.picker.utils.visible
 import com.stas.picker.view_model.PickerViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -76,14 +82,26 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
         binding.revMediaPicker.adapter = adapter
         binding.revMediaPicker.layoutManager = layoutManager
         binding.revMediaPicker.addItemDecoration(decorator)
-        viewModel.setList(list)
+        if (viewModel.listItems.value.isEmpty()) {
+            viewModel.setList(list)
+        }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.listItems.collectLatest {
-                    Log.d("MYAGMYTAG", "currentList = $it")
-                    adapter?.submitList(it)
+        collectFlowLatest(viewModel.chosenItems) {
+            Log.d("MYAGMYTAG", "currentChosenList = $it")
+            binding.apply {
+                if (it.isNotEmpty()) {
+                    tvChooseCount.visible(true)
+                    tvChooseCount.text = getString(R.string.bottom_sheet_chosen, it.size)
+                } else {
+                    tvChooseCount.visible(false)
                 }
+            }
+        }
+
+        collectFlowLatest(viewModel.listItems) {
+            viewModel.listItems.collectLatest {
+                Log.d("MYAGMYTAG", "currentList = $it")
+                adapter?.submitList(it)
             }
         }
     }
@@ -115,6 +133,38 @@ class PickerBottomSheet : BottomSheetDialogFragment() {
             })
         }
     }
+
+//    private fun startCamera() {
+//        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+//
+//        cameraProviderFuture.addListener({
+//            // Used to bind the lifecycle of cameras to the lifecycle owner
+//            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+//
+//            // Preview
+//            val preview = Preview.Builder()
+//                .build()
+//                .also {
+//                    it.setSurfaceProvider(binding.cameraView.surfaceProvider)
+//                }
+//
+//            // Select back camera as a default
+//            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+//
+//            try {
+//                // Unbind use cases before rebinding
+//                cameraProvider.unbindAll()
+//
+//                // Bind use cases to camera
+////                cameraProvider.bindToLifecycle(
+////                    this, cameraSelector, preview)
+//
+//            } catch(exc: Exception) {
+//                Log.e("TAG", "Use case binding failed", exc)
+//            }
+//
+//        }, ContextCompat.getMainExecutor(requireContext()))
+//    }
 
 
     companion object {

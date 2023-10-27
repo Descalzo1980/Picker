@@ -5,20 +5,23 @@ import androidx.lifecycle.ViewModel
 import com.stas.picker.model.MediaItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class PickerViewModel : ViewModel() {
 
     private val _listItems = MutableStateFlow<List<MediaItem>>(emptyList())
     val listItems: StateFlow<List<MediaItem>> = _listItems
 
-    private val _chosenItems = MutableStateFlow<MutableList<MediaItem>>(mutableListOf())
+    private val _chosenItems = MutableStateFlow<List<String>>(mutableListOf())
+    val chosenItems: StateFlow<List<String>> = _chosenItems
 
     fun handleItemClick(mediaItem: MediaItem) {
-        if (_chosenItems.value.size >= 30) {
-            return
-        }
-        if (_chosenItems.value.contains(mediaItem).not()) {
-            chooseItem(mediaItem)
+        if (_chosenItems.value.contains(mediaItem.uri).not()) {
+            if (_chosenItems.value.size >= 10) {
+                return
+            } else {
+                chooseItem(mediaItem)
+            }
         } else {
             removeItem(mediaItem)
         }
@@ -32,13 +35,21 @@ class PickerViewModel : ViewModel() {
                 it
             }
         }
-        _chosenItems.value.add(item)
+        val list = _chosenItems.value.toMutableList()
+        list.add(item.uri)
+        _chosenItems.update {
+            list
+        }
     }
 
     private fun removeItem(item: MediaItem) {
         var counter = 1
-        _chosenItems.value.remove(item)
-       _listItems.value = _listItems.value.map {
+        val list = _chosenItems.value.toMutableList()
+        list.remove(item.uri)
+        _chosenItems.update {
+            list
+        }
+        _listItems.value = _listItems.value.map {
             if (it.uri == item.uri) {
                 it.copy(choosePosition = 0)
             } else if (it.choosePosition > 0) {
@@ -47,7 +58,6 @@ class PickerViewModel : ViewModel() {
                 it
             }
         }
-
     }
 
     fun setList(list: List<MediaItem>) {
