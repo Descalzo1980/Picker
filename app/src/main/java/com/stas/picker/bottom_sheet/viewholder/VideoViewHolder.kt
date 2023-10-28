@@ -5,7 +5,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.color.MaterialColors
 import com.stas.picker.R
-import com.stas.picker.bottom_sheet.adapter.RecyclerViewAdapter
+import com.stas.picker.bottom_sheet.media_adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.RvPickerVideoItemBinding
 import com.stas.picker.model.MediaItem
 import com.stas.picker.utils.visible

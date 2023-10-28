@@ -24,31 +24,13 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvChooseCount"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        android:layout_marginStart="16dp"
-        android:textSize="16sp"
-        tools:text="@string/bottom_sheet_chosen"
-        app:layout_constraintTop_toBottomOf="@id/llDragHandle"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/llDragHandle" >
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/revMediaPicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvChooseCount"
-        tools:listitem="@layout/rv_picker_photo_item" />
+    </androidx.fragment.app.FragmentContainerView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav"

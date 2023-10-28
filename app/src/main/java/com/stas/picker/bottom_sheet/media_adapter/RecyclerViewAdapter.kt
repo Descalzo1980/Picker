@@ -1,10 +1,10 @@
-package com.stas.picker.bottom_sheet.adapter
+package com.stas.picker.bottom_sheet.media_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import androidx.recyclerview.widget.RecyclerView.generateViewId
 import com.stas.picker.bottom_sheet.viewholder.CameraViewHolder
 import com.stas.picker.bottom_sheet.viewholder.PhotoViewHolder
 import com.stas.picker.bottom_sheet.viewholder.VideoViewHolder
@@ -14,6 +14,7 @@ import com.stas.picker.databinding.RvPickerVideoItemBinding
 import com.stas.picker.model.MediaItem
 
 class RecyclerViewAdapter(
+    private val lifecycleOwner: LifecycleOwner,
     private val listener: Listener
 ) : ListAdapter<MediaItem, ViewHolder>(MediaItemDiffCallback()) {
 
@@ -54,6 +55,7 @@ class RecyclerViewAdapter(
             }
             THIRD_TYPE -> {
                 CameraViewHolder(
+                    lifecycleOwner,
                     RvCameraPreviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 )
             }
