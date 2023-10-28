@@ -1,13 +1,44 @@
 package com.stas.picker.view_model
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.stas.picker.FileRepository
+import com.stas.picker.FileRepositoryImpl
 import com.stas.picker.model.MediaItem
+import com.stas.picker.room.AppDatabase
+import com.stas.picker.room.FileItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class PickerViewModel : ViewModel() {
+class PickerViewModel(val context: Application) : ViewModel() {
+
+    private val dbHelper = FileRepositoryImpl(AppDatabase.getInstance(context))
+
+    init {
+        fetchUsers()
+    }
+
+    private fun fetchUsers() {
+        viewModelScope.launch {
+            dbHelper.getFile()
+                .flowOn(Dispatchers.IO)
+                .catch { e ->
+                    // handle exception
+                }
+                .collect {
+                    // list of users from the database
+                }
+        }
+    }
 
     private val _listItems = MutableStateFlow<List<MediaItem>>(emptyList())
     val listItems: StateFlow<List<MediaItem>> = _listItems

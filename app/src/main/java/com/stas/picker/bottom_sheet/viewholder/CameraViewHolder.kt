@@ -1,6 +1,5 @@
 package com.stas.picker.bottom_sheet.viewholder
 
-import android.content.Context
 import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
