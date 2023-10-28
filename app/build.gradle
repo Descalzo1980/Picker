@@ -75,10 +75,7 @@ dependencies {
     implementation("androidx.camera:camera-extensions:1.4.0-alpha02")
 
     //Room Database
-    def room_version = "2.6.0"
     implementation "androidx.room:room-runtime:2.6.0"
     annotationProcessor "androidx.room:room-compiler:2.6.0"
-    implementation "androidx.room:room-ktx:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
 
 }
