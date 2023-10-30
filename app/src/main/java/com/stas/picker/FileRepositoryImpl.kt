@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 class FileRepositoryImpl(private val appDatabase: AppDatabase) : FileRepository {
 
     override suspend fun getAllFiles(): List<FileItem> = withContext(Dispatchers.IO) {
-       appDatabase.fileDao().getAllFile()
+        appDatabase.fileDao().getAllFile()
     }
 
     override suspend fun insertItem(files: FileItem) {

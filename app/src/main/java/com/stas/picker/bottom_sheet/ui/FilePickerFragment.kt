@@ -10,6 +10,8 @@ import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.stas.picker.FileRepository
 import com.stas.picker.FileRepositoryImpl
 import com.stas.picker.Logger

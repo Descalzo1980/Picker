@@ -19,6 +19,7 @@ class FileViewModel(private val fileRepository: FileRepository) : ViewModel() {
     fun insertFile(fileItem: FileItem) {
         viewModelScope.launch {
             fileRepository.insertItem(fileItem)
+            getAllFiles()
         }
     }
     suspend fun getAllFiles() {
