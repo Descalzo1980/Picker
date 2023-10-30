@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.stas.picker.bottom_sheet.viewholder.CameraViewHolder
-import com.stas.picker.bottom_sheet.viewholder.PhotoViewHolder
-import com.stas.picker.bottom_sheet.viewholder.VideoViewHolder
+import com.stas.picker.bottom_sheet.media_adapter.viewholder.CameraViewHolder
+import com.stas.picker.bottom_sheet.media_adapter.viewholder.PhotoViewHolder
+import com.stas.picker.bottom_sheet.media_adapter.viewholder.VideoViewHolder
 import com.stas.picker.databinding.RvCameraPreviewItemBinding
 import com.stas.picker.databinding.RvPickerPhotoItemBinding
 import com.stas.picker.databinding.RvPickerVideoItemBinding
+import com.stas.picker.model.EMPTY_STRING
 import com.stas.picker.model.MediaItem
 
 class RecyclerViewAdapter(
@@ -19,11 +20,9 @@ class RecyclerViewAdapter(
 ) : ListAdapter<MediaItem, ViewHolder>(MediaItemDiffCallback()) {
 
     interface Listener {
-        fun onClick(mediaItem: MediaItem)
-        fun onLongClick(mediaItem: MediaItem)
+        fun onMediaClick(mediaItem: MediaItem)
+        fun onPickItemClick(mediaItem: MediaItem)
     }
-
-    private val items = mutableListOf<MediaItem>()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (holder) {
@@ -88,7 +87,7 @@ class RecyclerViewAdapter(
         val item = currentList[position]
         return if (item.isCamera) {
             THIRD_TYPE
-        } else if (item.length > 0) {
+        } else if (item.length != EMPTY_STRING) {
             SECOND_TYPE
         } else {
             FIRST_TYPE

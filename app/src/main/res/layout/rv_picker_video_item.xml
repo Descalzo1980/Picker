@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="125dp"
     android:orientation="vertical"
-    android:layout_gravity="center_vertical"
+    android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,10 +13,11 @@
 
         <ImageView
             android:id="@+id/ivMediaItem"
-            android:layout_width="116dp"
-            android:layout_height="116dp"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
             android:clickable="true"
-            app:layout_constraintDimensionRatio="H16:9"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_placeholder"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

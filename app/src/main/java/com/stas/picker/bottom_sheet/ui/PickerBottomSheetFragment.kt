@@ -35,7 +35,7 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                     Logger.log("MediaPickerFragment")
                     childFragmentManager
                         .beginTransaction()
-                        .replace(R.id.container, MediaPickerFragment())
+                        .replace(R.id.container, MediaPickerFragment.getInstance())
                         .commit()
                     true
                 }

@@ -2,12 +2,13 @@ package com.stas.picker.utils
 
 import com.stas.picker.model.MediaItem
 import com.stas.picker.model.MediaPath
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 
 fun List<MediaPath>.toMediaItem(): MutableList<MediaItem> {
     val result = mutableListOf<MediaItem>()
-//    result.add(MediaItem(isCamera = true))
     result.addAll(
         this.map {
             it.toMedia()
@@ -18,7 +19,7 @@ fun List<MediaPath>.toMediaItem(): MutableList<MediaItem> {
 
 fun MediaPath.toMedia(): MediaItem {
     return if (this.isVideo) {
-        MediaItem(this.uri, length = this.duration)
+        MediaItem(this.uri, length = SimpleDateFormat("mm:ss", Locale.getDefault()).format(Date(this.duration)))
     } else {
         MediaItem(this.uri)
     }

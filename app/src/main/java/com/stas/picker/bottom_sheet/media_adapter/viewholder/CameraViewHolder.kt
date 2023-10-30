@@ -1,4 +1,4 @@
-package com.stas.picker.bottom_sheet.viewholder
+package com.stas.picker.bottom_sheet.media_adapter.viewholder
 
 import android.util.Log
 import androidx.camera.core.CameraSelector
