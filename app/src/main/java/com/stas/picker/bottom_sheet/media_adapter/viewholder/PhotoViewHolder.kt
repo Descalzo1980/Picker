@@ -1,4 +1,4 @@
-package com.stas.picker.bottom_sheet.viewholder
+package com.stas.picker.bottom_sheet.media_adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,22 +19,21 @@ class PhotoViewHolder(
 
     init {
         binding.ivItemCount.setOnClickListener() {
-            listener.onLongClick(item)
+            listener.onPickItemClick(item)
         }
     }
 
     fun bind(item: MediaItem) {
         this.item = item
         binding.apply {
-            Glide.with(itemView)
+            Glide.with(itemView.context)
                 .load(item.uri)
-                .centerCrop()
-                .placeholder(R.drawable.ic_placeholder)
-                .error(R.drawable.ic_placeholder)
+                .placeholder(R.drawable.ic_media_place_holder)
+                .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(ivMediaItem)
             ivMediaItem.setOnClickListener {
-                listener.onClick(item)
+                listener.onMediaClick(item)
             }
             bindFavoriteState(item)
         }

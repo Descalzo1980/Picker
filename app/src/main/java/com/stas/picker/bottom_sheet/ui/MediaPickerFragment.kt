@@ -15,6 +15,7 @@ import com.stas.picker.R
 import com.stas.picker.bottom_sheet.media_adapter.RecyclerItemDecoration
 import com.stas.picker.bottom_sheet.media_adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.FragmentMediaPickerBinding
+import com.stas.picker.model.EMPTY_STRING
 import com.stas.picker.model.MediaItem
 import com.stas.picker.utils.collectFlowLatest
 import com.stas.picker.utils.visible
@@ -25,7 +26,7 @@ class MediaPickerFragment : Fragment() {
 
     private lateinit var binding: FragmentMediaPickerBinding
     private lateinit var viewModel: PickerViewModel
-    private var adapter: RecyclerViewAdapter? = null
+    private var viewAdapter: RecyclerViewAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +40,9 @@ class MediaPickerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[PickerViewModel::class.java]
         val layoutManager = GridLayoutManager(requireContext(), SPAN_COUNT)
-        adapter = RecyclerViewAdapter(this, object : RecyclerViewAdapter.Listener {
-            override fun onClick(mediaItem: MediaItem) {
-                if (mediaItem.length > 0) {
+        viewAdapter = RecyclerViewAdapter(this, object : RecyclerViewAdapter.Listener {
+            override fun onMediaClick(mediaItem: MediaItem) {
+                if (mediaItem.length != EMPTY_STRING) {
                     findNavController().navigate(
                         R.id.action_pickerFragment_to_videoFragment,
                         bundleOf(
@@ -58,7 +59,7 @@ class MediaPickerFragment : Fragment() {
                 }
             }
 
-            override fun onLongClick(mediaItem: MediaItem) {
+            override fun onPickItemClick(mediaItem: MediaItem) {
                 viewModel.handleItemClick(mediaItem)
             }
         })
@@ -67,9 +68,13 @@ class MediaPickerFragment : Fragment() {
             SPAN_COUNT,
             SPACING
         )
-        binding.revMediaPicker.adapter = adapter
-        binding.revMediaPicker.layoutManager = layoutManager
-        binding.revMediaPicker.addItemDecoration(decorator)
+        binding.revMediaPicker.apply {
+            this.adapter = viewAdapter
+            setHasFixedSize(true)
+            this.layoutManager = layoutManager
+            addItemDecoration(decorator)
+            itemAnimator = null
+        }
 
         collectFlowLatest(viewModel.chosenItems) {
             Log.d("MYAGMYTAG", "currentChosenList = $it")
@@ -86,7 +91,7 @@ class MediaPickerFragment : Fragment() {
         collectFlowLatest(viewModel.listItems) {
             viewModel.listItems.collectLatest {
                 Log.d("MYAGMYTAG", "currentList = $it")
-                adapter?.submitList(it)
+                viewAdapter?.submitList(it)
             }
         }
     }

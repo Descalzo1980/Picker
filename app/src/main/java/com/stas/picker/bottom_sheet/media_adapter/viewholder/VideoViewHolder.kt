@@ -1,4 +1,4 @@
-package com.stas.picker.bottom_sheet.viewholder
+package com.stas.picker.bottom_sheet.media_adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -9,9 +9,6 @@ import com.stas.picker.bottom_sheet.media_adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.RvPickerVideoItemBinding
 import com.stas.picker.model.MediaItem
 import com.stas.picker.utils.visible
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class VideoViewHolder(
     private val binding: RvPickerVideoItemBinding,
@@ -22,24 +19,23 @@ class VideoViewHolder(
 
     init {
         binding.ivItemCount.setOnClickListener() {
-            listener.onLongClick(item)
+            listener.onPickItemClick(item)
         }
     }
 
     fun bind(item: MediaItem) {
         this.item = item
         binding.apply {
-            Glide.with(itemView)
+            Glide.with(itemView.context)
                 .load(item.uri)
-                .centerCrop()
-                .placeholder(R.drawable.ic_placeholder)
-                .error(R.drawable.ic_placeholder)
+                .placeholder(R.drawable.ic_media_place_holder)
+                .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(ivMediaItem)
             ivMediaItem.setOnClickListener {
-                listener.onClick(item)
+                listener.onMediaClick(item)
             }
-            tvTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(Date(item.length))
+            tvTime.text = item.length
             bindFavoriteState(item)
         }
     }
