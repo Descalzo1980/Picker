@@ -10,14 +10,15 @@ import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.stas.picker.FileRepository
 import com.stas.picker.FileRepositoryImpl
 import com.stas.picker.Logger
+import com.stas.picker.bottom_sheet.media_adapter.FileCategoryAdapter
+import com.stas.picker.bottom_sheet.media_adapter.RecyclerItemDecoration
 import com.stas.picker.databinding.FragmentFilePickerBinding
 import com.stas.picker.room.DatabaseBuilder
 import com.stas.picker.utils.collectFlowLatest
+import com.stas.picker.utils.toFileCategory
 import com.stas.picker.view_model.FileViewModel
 import java.io.File
 
@@ -29,6 +30,8 @@ class FilePickerFragment : Fragment() {
     private var viewModel: FileViewModel? = null
 
     var db: FileRepository? = null
+
+    private var fileAdapterType: FileCategoryAdapter? = null
 
     private var contentLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
@@ -47,12 +50,24 @@ class FilePickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         db = FileRepositoryImpl(DatabaseBuilder.getInstance(requireContext()))
+        fileAdapterType = FileCategoryAdapter()
+        val decorator = RecyclerItemDecoration(
+            MediaPickerFragment.SPAN_COUNT,
+            MediaPickerFragment.SPACING
+        )
+        binding.rvFilePicker.apply {
+            this.adapter = fileAdapterType
+            setHasFixedSize(true)
+            this.layoutManager = layoutManager
+            addItemDecoration(decorator)
+        }
         viewModel = FileViewModel(db!!)
         binding.btnInsert.setOnClickListener {
             contentLauncher.launch(TYPE_ALL)
         }
-        collectFlowLatest(viewModel!!.listItems) {
-            Logger.log(it.toString())
+        collectFlowLatest(viewModel!!.listItems) { fileItems ->
+            val categoryItems = fileItems.map { it.toFileCategory() }
+            fileAdapterType?.submitList(categoryItems)
         }
     }
 

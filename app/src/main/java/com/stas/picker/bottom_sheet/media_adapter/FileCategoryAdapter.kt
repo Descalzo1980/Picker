@@ -2,7 +2,6 @@ package com.stas.picker.bottom_sheet.media_adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.recyclerview.widget.ListAdapter
 import com.stas.picker.FileCategoryItem
 import com.stas.picker.bottom_sheet.media_adapter.viewholder.FileCategoryViewHolder

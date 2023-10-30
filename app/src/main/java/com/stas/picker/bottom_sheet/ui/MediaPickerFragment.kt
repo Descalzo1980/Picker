@@ -96,8 +96,8 @@ class MediaPickerFragment : Fragment() {
     }
 
     companion object {
-        private const val SPAN_COUNT = 3
-        private const val SPACING = 2
+        const val SPAN_COUNT = 3
+        const val SPACING = 2
 
         fun getInstance(): MediaPickerFragment = MediaPickerFragment()
     }
