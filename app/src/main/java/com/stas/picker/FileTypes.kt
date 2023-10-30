@@ -1,14 +1,15 @@
 package com.stas.picker
 
-object FileTypes {
-    val fileTypes = listOf(
-        FileType("zip", R.drawable.ic_zip),
+data class FileCategoryItem(val category: FileCategory)
+
+enum class FileCategory(val label: String, val fileTypes: List<FileType>) {
+    DOCUMENT("Documents", listOf(
         FileType("doc", R.drawable.ic_docx),
         FileType("docx", R.drawable.ic_docx),
-        FileType("ppt", R.drawable.ic_pptx),
-        FileType("pptx", R.drawable.ic_pptx),
         FileType("pdf", R.drawable.ic_pdf),
-        FileType("txt", R.drawable.ic_txt),
+        FileType("txt", R.drawable.ic_txt)
+    )),
+    IMAGE("Images", listOf(
         FileType("png", R.drawable.ic_jpeg),
         FileType("jpg", R.drawable.ic_jpeg),
         FileType("jpeg", R.drawable.ic_jpeg),
@@ -37,6 +38,8 @@ object FileTypes {
         FileType("eps", R.drawable.ic_jpeg),
         FileType("3g2", R.drawable.ic_jpeg),
         FileType("3gp", R.drawable.ic_jpeg),
+    )),
+    VIDEO("Videos", listOf(
         FileType("avi", R.drawable.ic_video),
         FileType("flv", R.drawable.ic_video),
         FileType("m4v", R.drawable.ic_video),
@@ -50,8 +53,18 @@ object FileTypes {
         FileType("vob", R.drawable.ic_video),
         FileType("asf", R.drawable.ic_video),
         FileType("webm", R.drawable.ic_video),
+    )),
+    XML("XML Files", listOf(
         FileType("xml", R.drawable.ic_xml),
-        FileType("xlsx", R.drawable.ic_xml),
-        FileType("unknown", R.drawable.ic_placeholder),
-    )
+        FileType("xlsx", R.drawable.ic_xml)
+    )),
+    UNKNOWN("Unknown", listOf(
+        FileType("unknown", R.drawable.ic_placeholder)
+    ));
+
+    companion object {
+        fun getFileTypeByExtension(extension: String): FileType? {
+            return values().flatMap { it.fileTypes }.find { it.extension == extension }
+        }
+    }
 }
