@@ -1,23 +1,23 @@
 package com.stas.picker.bottom_sheet.ui
 
+import android.content.ContentResolver
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.stas.picker.FileRepository
 import com.stas.picker.FileRepositoryImpl
 import com.stas.picker.Logger
 import com.stas.picker.databinding.FragmentFilePickerBinding
 import com.stas.picker.room.DatabaseBuilder
-import com.stas.picker.room.FileItem
 import com.stas.picker.utils.collectFlowLatest
 import com.stas.picker.view_model.FileViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import java.io.File
 
 
 class FilePickerFragment : Fragment() {
@@ -27,6 +27,12 @@ class FilePickerFragment : Fragment() {
     private var viewModel: FileViewModel? = null
 
     var db: FileRepository? = null
+
+    private var contentLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let {
+            selectImage(it)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,13 +47,32 @@ class FilePickerFragment : Fragment() {
         db = FileRepositoryImpl(DatabaseBuilder.getInstance(requireContext()))
         viewModel = FileViewModel(db!!)
         binding.btnInsert.setOnClickListener {
-            viewModel!!.insertFile(FileItem("1", 1f, "OLOLO", ".pdf"))
+            contentLauncher.launch(TYPE_ALL)
         }
-        CoroutineScope(Dispatchers.IO).launch {
-            viewModel!!.getAllFiles().collect{
-                Logger.log(it.toString())
-            }
+        collectFlowLatest(viewModel!!.listItems) {
+            Logger.log(it.toString())
         }
+    }
+
+
+    private fun selectImage(uri: Uri) {
+        Logger.log(uri.toString())
+        val sourceFile = DocumentFile.fromSingleUri(requireContext(), uri)
+        val bool = sourceFile!!.exists()
+        Logger.log("File exists $bool, fileType = ${getFileMimeType(uri)}")
+    }
+
+    private fun getFileMimeType(uri: Uri): String? {
+        return if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
+            val mime = MimeTypeMap.getSingleton()
+            mime.getExtensionFromMimeType(requireContext().contentResolver.getType(uri))
+        } else {
+            MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(File(uri.path!!)).toString())
+        }
+    }
+
+    companion object {
+        private const val TYPE_ALL = "*/*"
     }
 
 }

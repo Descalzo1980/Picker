@@ -19,12 +19,15 @@ class FileViewModel(private val fileRepository: FileRepository) : ViewModel() {
     fun insertFile(fileItem: FileItem) {
         viewModelScope.launch {
             fileRepository.insertItem(fileItem)
-                .catch { e ->
-                    e.fillInStackTrace()
-                }
         }
     }
-    suspend fun getAllFiles(): Flow<List<FileItem>> {
-        return fileRepository.getAllFiles()
+    suspend fun getAllFiles() {
+        viewModelScope.launch {
+            val list = fileRepository.getAllFiles()
+            _listItems.update {
+                list
+            }
+        }
     }
+
 }
