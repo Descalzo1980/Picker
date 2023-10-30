@@ -41,6 +41,10 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                 }
 
                 R.id.file -> {
+                    childFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, FilePickerFragment())
+                        .commit()
                     true
                 }
 

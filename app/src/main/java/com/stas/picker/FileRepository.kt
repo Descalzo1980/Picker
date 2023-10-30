@@ -5,8 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface FileRepository {
 
-    fun getFile(): Flow<List<FileItem>>
+    suspend fun getAllFiles(): Flow<List<FileItem>>
 
-    fun insertAll(files: List<FileItem>): Flow<Unit>
+    suspend fun insertItem(files: FileItem): Flow<Unit>
+
+    suspend fun deleteFile(file: FileItem)
 
 }

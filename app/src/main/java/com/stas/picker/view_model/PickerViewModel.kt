@@ -21,29 +21,6 @@ import kotlinx.coroutines.launch
 
 class PickerViewModel : ViewModel() {
 
-//    lateinit var context: Context
-//
-//    private val dbHelper: FileRepository by lazy {
-//        FileRepositoryImpl(AppDatabase.getInstance(context))
-//    }
-
-//    init {
-//        fetchUsers()
-//    }
-
-//    private fun fetchUsers() {
-//        viewModelScope.launch {
-//            dbHelper.getFile()
-//                .flowOn(Dispatchers.IO)
-//                .catch { e ->
-//                    // handle exception
-//                }
-//                .collect {
-//                    // list of users from the database
-//                }
-//        }
-//    }
-
     private val _listItems = MutableStateFlow<List<MediaItem>>(emptyList())
     val listItems: StateFlow<List<MediaItem>> = _listItems
 
