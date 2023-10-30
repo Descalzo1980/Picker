@@ -92,7 +92,9 @@ class PickerViewModel(val context: Context) : ViewModel() {
     }
 
     fun setList(list: List<MediaItem>) {
-        _listItems.value = list
+        _listItems.update {
+            list
+        }
     }
 
     private fun getIndex(): Int = _chosenItems.value.size + 1

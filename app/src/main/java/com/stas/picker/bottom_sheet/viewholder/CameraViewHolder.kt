@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stas.picker.databinding.RvCameraPreviewItemBinding
 
 class CameraViewHolder(
+    private val lifecycleOwner: LifecycleOwner,
     private val binding: RvCameraPreviewItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind() {
@@ -17,26 +18,22 @@ class CameraViewHolder(
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
 
         cameraProviderFuture.addListener({
-            // Used to bind the lifecycle of cameras to the lifecycle owner
+
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
-            // Preview
             val preview = Preview.Builder()
                 .build()
                 .also {
                     it.setSurfaceProvider(binding.cameraView.surfaceProvider)
                 }
 
-            // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
-                // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
 
-                // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    binding.root.context as LifecycleOwner, cameraSelector, preview)
+                   lifecycleOwner, cameraSelector, preview)
 
             } catch(exc: Exception) {
                 Log.e("TAG", "Use case binding failed", exc)
