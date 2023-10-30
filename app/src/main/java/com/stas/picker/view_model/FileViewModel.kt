@@ -24,7 +24,12 @@ class FileViewModel(private val fileRepository: FileRepository) : ViewModel() {
                 }
         }
     }
-    suspend fun getAllFiles(): Flow<List<FileItem>> {
-        return fileRepository.getAllFiles()
+    suspend fun getAllFiles() {
+        viewModelScope.launch {
+            val list = fileRepository.getAllFiles()
+            _listItems.update {
+                list
+            }
+        }
     }
 }

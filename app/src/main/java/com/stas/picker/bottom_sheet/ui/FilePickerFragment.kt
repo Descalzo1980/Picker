@@ -43,10 +43,8 @@ class FilePickerFragment : Fragment() {
         binding.btnInsert.setOnClickListener {
             viewModel!!.insertFile(FileItem("1", 1f, "OLOLO", ".pdf"))
         }
-        CoroutineScope(Dispatchers.IO).launch {
-            viewModel!!.getAllFiles().collect{
-                Logger.log(it.toString())
-            }
+        collectFlowLatest(viewModel!!.listItems) {
+            Logger.log(it.toString())
         }
     }
 
