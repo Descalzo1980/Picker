@@ -19,9 +19,6 @@ class FileViewModel(private val fileRepository: FileRepository) : ViewModel() {
     fun insertFile(fileItem: FileItem) {
         viewModelScope.launch {
             fileRepository.insertItem(fileItem)
-                .catch { e ->
-                    e.fillInStackTrace()
-                }
         }
     }
     suspend fun getAllFiles() {
@@ -32,4 +29,5 @@ class FileViewModel(private val fileRepository: FileRepository) : ViewModel() {
             }
         }
     }
+
 }

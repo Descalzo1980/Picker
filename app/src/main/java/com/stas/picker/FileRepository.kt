@@ -7,7 +7,7 @@ interface FileRepository {
 
     suspend fun getAllFiles(): List<FileItem>
 
-    suspend fun insertItem(files: FileItem): Flow<Unit>
+    suspend fun insertItem(files: FileItem)
 
     suspend fun deleteFile(file: FileItem)
 

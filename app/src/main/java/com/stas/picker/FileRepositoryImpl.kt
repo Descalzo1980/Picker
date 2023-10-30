@@ -14,10 +14,11 @@ class FileRepositoryImpl(private val appDatabase: AppDatabase) : FileRepository 
        appDatabase.fileDao().getAllFile()
     }
 
-    override suspend fun insertItem(files: FileItem): Flow<Unit> =
+    override suspend fun insertItem(files: FileItem) {
         withContext(Dispatchers.IO) {
-            flow { emit(appDatabase.fileDao().insertFile(files)) }
+            appDatabase.fileDao().insertFile(files)
         }
+    }
 
 
     override suspend fun deleteFile(file: FileItem) {
