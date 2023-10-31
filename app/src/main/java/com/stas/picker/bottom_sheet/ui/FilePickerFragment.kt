@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.stas.picker.FileRepository
 import com.stas.picker.FileRepositoryImpl
 import com.stas.picker.Logger
@@ -26,7 +27,7 @@ import com.stas.picker.view_model.FileViewModel
 import java.io.File
 
 
-class FilePickerFragment : Fragment() {
+class FilePickerFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentFilePickerBinding
 
@@ -55,10 +56,17 @@ class FilePickerFragment : Fragment() {
         db = FileRepositoryImpl(DatabaseBuilder.getInstance(requireContext()))
         viewModel = FileViewModel(db!!)
 
-        fileAdapterType = FileCategoryAdapter()
+        fileAdapterType = FileCategoryAdapter(object : FileCategoryAdapter.FileListener {
+            override fun onClick(item: View) {
+                if (item.visibility == View.VISIBLE) {
+                    item.visibility = View.INVISIBLE
+                }else{
+                    item.visibility = View.VISIBLE
+                }
+            }
+        })
         binding.rvFilePicker.apply {
             this.adapter = fileAdapterType
-            setHasFixedSize(true)
         }
 
         binding.btnInsert.setOnClickListener {
@@ -69,6 +77,7 @@ class FilePickerFragment : Fragment() {
             fileAdapterType?.submitList(fileItems)
         }
         viewModel?.getAllFiles()
+        Logger.log("fileItemsSize = ${viewModel?.getAllFiles()}")
 
     }
 
@@ -76,15 +85,15 @@ class FilePickerFragment : Fragment() {
     private fun selectImage(uri: Uri) {
         Logger.log(uri.toString())
         val sourceFile = DocumentFile.fromSingleUri(requireContext(), uri)
-        sourceFile?.let {document ->
+        sourceFile?.let { document ->
             val fileSize = document.length()
             val fileName = document.name
             val mimeType = getFileMimeType(uri)
-
+            val fileCategory = checkFileType(mimeType)
             viewModel?.insertFile(
                 FileItem(
-                    uri =  uri.toString(),
-                    size =  fileSize.toFloat(),
+                    uri = uri.toString(),
+                    size = fileSize.toFloat(),
                     name = fileName ?: EMPTY_STRING,
                     extension = mimeType ?: EMPTY_STRING
                 )
