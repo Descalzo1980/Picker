@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import com.stas.picker.FileRepository
@@ -17,8 +18,8 @@ import com.stas.picker.bottom_sheet.media_adapter.FileCategoryAdapter
 import com.stas.picker.bottom_sheet.media_adapter.RecyclerItemDecoration
 import com.stas.picker.databinding.FragmentFilePickerBinding
 import com.stas.picker.room.DatabaseBuilder
+import com.stas.picker.utils.checkFileType
 import com.stas.picker.utils.collectFlowLatest
-import com.stas.picker.utils.toFileCategory
 import com.stas.picker.view_model.FileViewModel
 import java.io.File
 
@@ -66,8 +67,7 @@ class FilePickerFragment : Fragment() {
             contentLauncher.launch(TYPE_ALL)
         }
         collectFlowLatest(viewModel!!.listItems) { fileItems ->
-            val categoryItems = fileItems.map { it.toFileCategory() }
-            fileAdapterType?.submitList(categoryItems)
+
         }
     }
 
