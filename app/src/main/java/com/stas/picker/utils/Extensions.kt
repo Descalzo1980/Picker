@@ -49,12 +49,12 @@ fun <V> Fragment.collectFlowLatest(
     }
 }
 
-fun checkFileType(mimeType: String): FileCategory =
+fun checkFileType(mimeType: String?): FileCategory =
     when{
-        ALLOWABLE_MIME_DOCUMENT.contains("doc") -> FileCategory.DOCUMENT_DOC
-        ALLOWABLE_MIME_DOCUMENT.contains("pdf") -> FileCategory.DOCUMENT_PDF
-        ALLOWABLE_MIME_DOCUMENT.contains("txt") -> FileCategory.DOCUMENT_TXT
-        ALLOWABLE_MIME_DOCUMENT.contains("pptx") -> FileCategory.DOCUMENT_PPTX
+        ALLOWABLE_MIME_DOCUMENT.any { it == mimeType } -> FileCategory.DOCUMENT_DOC
+        ALLOWABLE_MIME_DOCUMENT.any { it == mimeType } -> FileCategory.DOCUMENT_PDF
+        ALLOWABLE_MIME_DOCUMENT.any { it == mimeType} -> FileCategory.DOCUMENT_TXT
+        ALLOWABLE_MIME_DOCUMENT.any { it == mimeType} -> FileCategory.DOCUMENT_PPTX
         ALLOWABLE_MIMES_IMAGE.any { it == mimeType } -> FileCategory.IMAGE
         ALLOWABLE_MIMES_VIDEO.any { it == mimeType } -> FileCategory.VIDEO
         ALLOWABLE_MIME_AUDIO.any { it == mimeType } -> FileCategory.AUDIO

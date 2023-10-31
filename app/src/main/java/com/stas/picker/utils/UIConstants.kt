@@ -9,7 +9,7 @@ object UIConstants {
     )
     val ALLOWABLE_MIMES_VIDEO: List<String> = listOf(
         "3g2", "3gp", "avi", "flv", "m4v", "wmv", "ogv", "mkv",
-        "mov", "mp4", "swf", "mpg", "vob", "asf", "webm"
+        "mov", "mp4", "swf", "mpg", "vob", "asf", "webm","gif"
     )
     val ALLOWABLE_MIME_AUDIO: List<String> = listOf(
         "aac", "midi", "m4a", "oga", "wav", "wma", "flac",

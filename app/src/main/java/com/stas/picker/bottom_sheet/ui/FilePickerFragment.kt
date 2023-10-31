@@ -8,23 +8,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.stas.picker.FileRepository
 import com.stas.picker.FileRepositoryImpl
 import com.stas.picker.Logger
 import com.stas.picker.bottom_sheet.media_adapter.FileCategoryAdapter
 import com.stas.picker.bottom_sheet.media_adapter.RecyclerItemDecoration
 import com.stas.picker.databinding.FragmentFilePickerBinding
+import com.stas.picker.model.EMPTY_STRING
 import com.stas.picker.room.DatabaseBuilder
+import com.stas.picker.room.FileItem
 import com.stas.picker.utils.checkFileType
 import com.stas.picker.utils.collectFlowLatest
 import com.stas.picker.view_model.FileViewModel
 import java.io.File
 
 
-class FilePickerFragment : Fragment() {
+class FilePickerFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentFilePickerBinding
 
@@ -51,32 +54,51 @@ class FilePickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         db = FileRepositoryImpl(DatabaseBuilder.getInstance(requireContext()))
-        fileAdapterType = FileCategoryAdapter()
-        val decorator = RecyclerItemDecoration(
-            MediaPickerFragment.SPAN_COUNT,
-            MediaPickerFragment.SPACING
-        )
+        viewModel = FileViewModel(db!!)
+
+        fileAdapterType = FileCategoryAdapter(object : FileCategoryAdapter.FileListener {
+            override fun onClick(item: View) {
+                if (item.visibility == View.VISIBLE) {
+                    item.visibility = View.INVISIBLE
+                }else{
+                    item.visibility = View.VISIBLE
+                }
+            }
+        })
         binding.rvFilePicker.apply {
             this.adapter = fileAdapterType
-            setHasFixedSize(true)
-            this.layoutManager = layoutManager
-            addItemDecoration(decorator)
         }
-        viewModel = FileViewModel(db!!)
+
         binding.btnInsert.setOnClickListener {
             contentLauncher.launch(TYPE_ALL)
         }
         collectFlowLatest(viewModel!!.listItems) { fileItems ->
-
+            Logger.log("fileItemsSize = ${fileItems}")
+            fileAdapterType?.submitList(fileItems)
         }
+        viewModel?.getAllFiles()
+        Logger.log("fileItemsSize = ${viewModel?.getAllFiles()}")
+
     }
 
 
     private fun selectImage(uri: Uri) {
         Logger.log(uri.toString())
         val sourceFile = DocumentFile.fromSingleUri(requireContext(), uri)
-        val bool = sourceFile!!.exists()
-        Logger.log("File exists $bool, fileType = ${getFileMimeType(uri)}")
+        sourceFile?.let { document ->
+            val fileSize = document.length()
+            val fileName = document.name
+            val mimeType = getFileMimeType(uri)
+            val fileCategory = checkFileType(mimeType)
+            viewModel?.insertFile(
+                FileItem(
+                    uri = uri.toString(),
+                    size = fileSize.toFloat(),
+                    name = fileName ?: EMPTY_STRING,
+                    extension = mimeType ?: EMPTY_STRING
+                )
+            )
+        }
     }
 
     private fun getFileMimeType(uri: Uri): String? {

@@ -1,7 +1,9 @@
 package com.stas.picker.utils
 
+import com.stas.picker.FileType
 import com.stas.picker.model.MediaItem
 import com.stas.picker.model.MediaPath
+import com.stas.picker.room.FileItem
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -27,5 +29,26 @@ fun MediaPath.toMedia(): MediaItem {
 
 fun Long.toDate(): Date {
     return Date(this)
+}
+
+fun List<FileItem>.toFileType(): MutableList<FileType> {
+    val result = mutableListOf<FileType>()
+    result.addAll(
+        this.map {
+            it.toFileType()
+        }
+    )
+    return result
+}
+
+fun FileItem.toFileType(): FileType {
+    val res = checkFileType(this.extension)
+    return FileType(
+        uri = this.uri,
+        extension = this.extension,
+        size = this.size.toString(),
+        res.iconDrawableId,
+        name = this.name
+    )
 }
 
