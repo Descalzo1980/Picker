@@ -19,7 +19,7 @@ import com.stas.picker.model.EMPTY_STRING
 import com.stas.picker.model.MediaItem
 import com.stas.picker.utils.collectFlowLatest
 import com.stas.picker.utils.visible
-import com.stas.picker.view_model.PickerViewModel
+import com.stas.picker.bottom_sheet.view_model.PickerViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 class MediaPickerFragment : Fragment() {

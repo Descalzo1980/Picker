@@ -1,4 +1,4 @@
-package com.stas.picker.bottom_sheet.media_adapter
+package com.stas.picker.bottom_sheet.file_adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.stas.picker.FileType

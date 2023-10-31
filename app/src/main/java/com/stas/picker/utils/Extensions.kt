@@ -1,13 +1,15 @@
 package com.stas.picker.utils
 
+import android.content.Context
+import android.net.Uri
 import android.view.View
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.stas.picker.FileType
 import com.stas.picker.model.FileCategory
-import com.stas.picker.room.FileItem
 import com.stas.picker.utils.UIConstants.ALLOWABLE_MIMES_IMAGE
 import com.stas.picker.utils.UIConstants.ALLOWABLE_MIMES_VIDEO
 import com.stas.picker.utils.UIConstants.ALLOWABLE_MIME_AUDIO
@@ -15,7 +17,6 @@ import com.stas.picker.utils.UIConstants.ALLOWABLE_MIME_DOCUMENT
 import com.stas.picker.utils.UIConstants.ALLOWABLE_MIME_TYPE_ZIP
 import com.stas.picker.utils.UIConstants.ALLOWABLE_MIME_XML
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -47,6 +48,11 @@ fun <V> Fragment.collectFlowLatest(
             }
         }
     }
+}
+
+fun FileType.exists(context: Context): Boolean {
+    val sourceFile = DocumentFile.fromSingleUri(context, Uri.parse(this.uri))
+    return sourceFile?.exists() ?: false
 }
 
 fun checkFileType(mimeType: String?): FileCategory =

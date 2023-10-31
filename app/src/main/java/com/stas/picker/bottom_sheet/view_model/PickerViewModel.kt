@@ -1,4 +1,4 @@
-package com.stas.picker.view_model
+package com.stas.picker.bottom_sheet.view_model
 
 import androidx.lifecycle.ViewModel
 import com.stas.picker.model.MediaItem
@@ -62,6 +62,12 @@ class PickerViewModel : ViewModel() {
     fun setList(list: List<MediaItem>) {
         _listItems.update {
             list
+        }
+    }
+
+    fun clearList() {
+        _chosenItems.update {
+            emptyList()
         }
     }
 
