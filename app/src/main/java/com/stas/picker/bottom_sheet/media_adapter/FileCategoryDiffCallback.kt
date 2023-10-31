@@ -1,15 +1,16 @@
 package com.stas.picker.bottom_sheet.media_adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.stas.picker.FileCategoryItem
+import com.stas.picker.FileType
 
 
-class FileCategoryDiffCallback : DiffUtil.ItemCallback<FileCategoryItem>() {
-    override fun areItemsTheSame(oldItem: FileCategoryItem, newItem: FileCategoryItem): Boolean {
-        return oldItem.category == newItem.category
+class FileCategoryDiffCallback : DiffUtil.ItemCallback<FileType>() {
+
+    override fun areItemsTheSame(oldItem: FileType, newItem: FileType): Boolean {
+        return oldItem.uri == newItem.uri
     }
 
-    override fun areContentsTheSame(oldItem: FileCategoryItem, newItem: FileCategoryItem): Boolean {
-        return oldItem == newItem
+    override fun areContentsTheSame(oldItem: FileType, newItem: FileType): Boolean {
+        return oldItem.hashCode() == newItem.hashCode()
     }
 }

@@ -3,11 +3,13 @@ package com.stas.picker.bottom_sheet.media_adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.stas.picker.FileType
 import com.stas.picker.bottom_sheet.media_adapter.viewholder.FileCategoryViewHolder
 import com.stas.picker.databinding.ItemFileCategoryBinding
 import com.stas.picker.model.FileCategory
+import com.stas.picker.room.FileItem
 
-class FileCategoryAdapter : ListAdapter<FileCategory, FileCategoryViewHolder>(FileCategoryDiffCallback()) {
+class FileCategoryAdapter : ListAdapter<FileType, FileCategoryViewHolder>(FileCategoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileCategoryViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -18,4 +20,5 @@ class FileCategoryAdapter : ListAdapter<FileCategory, FileCategoryViewHolder>(Fi
     override fun onBindViewHolder(holder: FileCategoryViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
+
 }

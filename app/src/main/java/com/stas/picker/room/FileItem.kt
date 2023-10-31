@@ -5,7 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "files")
 data class FileItem(
-    @PrimaryKey val uri: String,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+    val uri: String,
     val size: Float,
     val name: String,
     val extension: String
