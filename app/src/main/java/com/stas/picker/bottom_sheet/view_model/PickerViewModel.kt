@@ -69,6 +69,9 @@ class PickerViewModel : ViewModel() {
         _chosenItems.update {
             emptyList()
         }
+        _listItems.update {
+            emptyList()
+        }
     }
 
     private fun getIndex(): Int = _chosenItems.value.size + 1

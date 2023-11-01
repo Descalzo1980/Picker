@@ -39,7 +39,9 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[PickerViewModel::class.java]
-        viewModel.setList(getMediaUris().toMediaItem())
+        if (viewModel.listItems.value.isEmpty()) {
+            viewModel.setList(getMediaUris().toMediaItem())
+        }
         Logger.log("onViewCreated")
         setUpOutsideTouchListener()
         binding.nav.setOnItemSelectedListener { item ->
