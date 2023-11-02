@@ -25,6 +25,7 @@ import com.stas.picker.utils.collectFlowLatest
 import com.stas.picker.utils.exists
 import com.stas.picker.utils.visible
 import com.stas.picker.bottom_sheet.view_model.FileViewModel
+import com.stas.picker.utils.PaddingDecorator
 import java.io.File
 
 
@@ -70,6 +71,11 @@ class FilePickerFragment : BottomSheetDialogFragment() {
         })
         binding.rvFilePicker.apply {
             this.adapter = fileAdapterType
+            this.addItemDecoration(
+                PaddingDecorator(
+                    16
+                )
+            )
         }
 
         binding.btnInsert.setOnClickListener {
