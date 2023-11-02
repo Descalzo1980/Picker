@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="images">
+        <item>@drawable/ic_1</item>
+        <item>@drawable/ic_2</item>
+        <item>@drawable/ic_3</item>
+        <item>@drawable/ic_4</item>
+        <item>@drawable/ic_5</item>
+        <item>@drawable/ic_6</item>
+        <item>@drawable/ic_7</item>
+        <item>@drawable/ic_8</item>
+        <item>@drawable/ic_9</item>
+        <item>@drawable/ic_10</item>
+        <item>@drawable/ic_11</item>
+        <item>@drawable/ic_12</item>
+        <item>@drawable/ic_13</item>
+        <item>@drawable/ic_14</item>
+        <item>@drawable/ic_15</item>
+        <item>@drawable/ic_16</item>
+        <item>@drawable/ic_17</item>
+        <item>@drawable/ic_18</item>
+        <item>@drawable/ic_19</item>
+        <item>@drawable/ic_20</item>
+        <item>@drawable/ic_21</item>
+        <item>@drawable/ic_22</item>
+        <item>@drawable/ic_23</item>
+        <item>@drawable/ic_24</item>
+        <item>@drawable/ic_25</item>
+        <item>@drawable/ic_26</item>
+        <item>@drawable/ic_27</item>
+        <item>@drawable/ic_28</item>
+        <item>@drawable/ic_29</item>
+        <item>@drawable/ic_30</item>
+    </array>
+</resources>

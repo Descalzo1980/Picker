@@ -2,6 +2,7 @@ package com.stas.picker.bottom_sheet.view_model
 
 import androidx.lifecycle.ViewModel
 import com.stas.picker.model.MediaItem
+import com.stas.picker.utils.chooseImageDrawable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -16,7 +17,7 @@ class PickerViewModel : ViewModel() {
 
     fun handleItemClick(mediaItem: MediaItem) {
         if (_chosenItems.value.contains(mediaItem.uri).not()) {
-            if (_chosenItems.value.size >= 10) {
+            if (_chosenItems.value.size >= 30) {
                 return
             } else {
                 chooseItem(mediaItem)
@@ -29,7 +30,7 @@ class PickerViewModel : ViewModel() {
     private fun chooseItem(item: MediaItem) {
         _listItems.value = _listItems.value.map {
             if (it.uri == item.uri) {
-                it.copy(choosePosition = getIndex())
+                it.copy(choosePosition = getIndex(), image = chooseImageDrawable(getIndex()))
             } else {
                 it
             }
@@ -50,9 +51,9 @@ class PickerViewModel : ViewModel() {
         }
         _listItems.value = _listItems.value.map {
             if (it.uri == item.uri) {
-                it.copy(choosePosition = 0)
+                it.copy(choosePosition = 0,image = chooseImageDrawable())
             } else if (it.choosePosition > 0) {
-                it.copy(choosePosition = counter++)
+                it.copy(choosePosition = counter, image = chooseImageDrawable(counter++))
             } else {
                 it
             }
