@@ -45,7 +45,7 @@ class MediaViewHolder(
 
     fun bindChooseState(item: MediaItem) {
         binding.apply {
-            ivItemCount.setBackgroundResource(item.image)
+            ivItemCount.setImageResource(item.image)
         }
     }
 
