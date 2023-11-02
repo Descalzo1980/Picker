@@ -9,9 +9,9 @@ import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -32,6 +32,9 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var viewModel: PickerViewModel
     private var alertDialog: MaterialAlertDialogBuilder? = null
     private var defaultRefreshRate: Float = 0f
+//    val behavior by lazy { (dialog as BottomSheetDialog?)?.behavior }
+//    val originalHeight = 1500 // current height
+//    val updatedHeight = 1500 // desired height
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +48,8 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getDefaultRefreshRate()
+//        updatePeekHeight(originalHeight, updatedHeight)
+        dialog?.window?.attributes?.windowAnimations = R.style.BottomSheetDialogAnimation;
         setFreshRate(BOTTOM_SHEET_RATE)
         viewModel = ViewModelProvider(requireActivity())[PickerViewModel::class.java]
         if (viewModel.listItems.value.isEmpty()) {
@@ -58,6 +63,8 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                     Logger.log("MediaPickerFragment")
                     childFragmentManager
                         .beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .setCustomAnimations(R.anim.to_in, R.anim.to_out)
                         .replace(R.id.container, MediaPickerFragment.getInstance())
                         .commit()
                     true
@@ -66,6 +73,7 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                 R.id.file -> {
                     childFragmentManager
                         .beginTransaction()
+                        .setCustomAnimations(R.anim.to_in, R.anim.to_out)
                         .replace(R.id.container, FilePickerFragment())
                         .commit()
                     true
@@ -82,6 +90,16 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
         }
         binding.nav.selectedItemId = R.id.gallery
     }
+
+//    private fun updatePeekHeight(originalHeight: Int, updatedHeight: Int) {
+//        ValueAnimator.ofInt(originalHeight, updatedHeight).apply {
+//            addUpdateListener {
+//                behavior?.peekHeight = it.animatedValue as Int
+//            }
+//            duration = 1300
+//            start()
+//        }
+//    }
 
     override fun onStart() {
         super.onStart()

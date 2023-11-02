@@ -29,7 +29,7 @@
             android:layout_height="24dp"
             android:layout_marginStart="90dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/round_bg"
+            tools:background="@drawable/round_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

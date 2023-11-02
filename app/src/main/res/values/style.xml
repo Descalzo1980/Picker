@@ -12,6 +12,9 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
+    <style name="BottomSheetDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_sheet_slide_up</item>
+    </style>
 
     <style name="FullScreenDialog">
         <item name="android:windowFullscreen">true</item>
