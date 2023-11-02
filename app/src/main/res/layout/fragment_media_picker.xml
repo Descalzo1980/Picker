@@ -25,6 +25,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvChooseCount"
-                tools:listitem="@layout/rv_picker_photo_item" />
+                tools:listitem="@layout/rv_picker_media_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

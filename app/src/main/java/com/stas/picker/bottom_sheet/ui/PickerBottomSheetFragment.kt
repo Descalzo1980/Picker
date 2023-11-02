@@ -17,9 +17,11 @@ import com.stas.picker.R
 import com.stas.picker.bottom_sheet.view_model.PickerViewModel
 import com.stas.picker.databinding.PickerBottomSheetBinding
 import com.stas.picker.model.MediaPath
+import com.stas.picker.utils.invisible
 import com.stas.picker.utils.showAnimation
 import com.stas.picker.utils.toDate
 import com.stas.picker.utils.toMediaItem
+import com.stas.picker.utils.visible
 
 class PickerBottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -86,9 +88,13 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                         showAnimation(binding.nav, false)
+//                        binding.appBarLayout.invisible(true)
+//                        binding.llDragHandle.invisible(false)
                     }
                     if (newState == BottomSheetBehavior.STATE_COLLAPSED && binding.nav.isVisible.not()) {
                         showAnimation(binding.nav, true)
+//                        binding.appBarLayout.invisible(false)
+//                        binding.llDragHandle.invisible(true)
                     }
                 }
 
@@ -103,7 +109,12 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                                 behavior.isHideable = true
                             }
                         }
-
+                    }
+                    if (slideOffset < 1) {
+//                        if (binding.appBarLayout.isVisible) {
+//                            binding.appBarLayout.invisible(false)
+////                            binding.llDragHandle.invisible(true)
+//                        }
                     }
                 }
             }.apply {

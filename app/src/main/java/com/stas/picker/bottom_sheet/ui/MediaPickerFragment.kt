@@ -2,11 +2,14 @@ package com.stas.picker.bottom_sheet.ui
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
+import android.view.Display
 import android.view.LayoutInflater
+import android.view.Surface
+import android.view.SurfaceControl
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,12 +17,12 @@ import com.stas.picker.PickerFragment
 import com.stas.picker.R
 import com.stas.picker.bottom_sheet.media_adapter.RecyclerItemDecoration
 import com.stas.picker.bottom_sheet.media_adapter.RecyclerViewAdapter
+import com.stas.picker.bottom_sheet.view_model.PickerViewModel
 import com.stas.picker.databinding.FragmentMediaPickerBinding
 import com.stas.picker.model.EMPTY_STRING
 import com.stas.picker.model.MediaItem
 import com.stas.picker.utils.collectFlowLatest
 import com.stas.picker.utils.visible
-import com.stas.picker.bottom_sheet.view_model.PickerViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 class MediaPickerFragment : Fragment() {
@@ -40,7 +43,7 @@ class MediaPickerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[PickerViewModel::class.java]
         val layoutManager = GridLayoutManager(requireContext(), SPAN_COUNT)
-        viewAdapter = RecyclerViewAdapter(this, object : RecyclerViewAdapter.Listener {
+        viewAdapter = RecyclerViewAdapter(object : RecyclerViewAdapter.Listener {
             override fun onMediaClick(mediaItem: MediaItem) {
                 if (mediaItem.length != EMPTY_STRING) {
                     findNavController().navigate(

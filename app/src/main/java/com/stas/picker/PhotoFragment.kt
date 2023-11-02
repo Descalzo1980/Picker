@@ -4,15 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.stas.picker.databinding.FragmentPhotoBinding
+import com.stas.picker.utils.anim.TransitionsHandler
 
-class PhotoFragment : Fragment() {
+class PhotoFragment : DialogFragment() {
 
     private var binding: FragmentPhotoBinding? = null
 
     private val photoVideoFragment: Boolean by lazy { arguments?.getString(PickerFragment.PHOTO_ITEM) != null }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.FullScreenDialog)
+        dialog?.window?.attributes?.windowAnimations = R.anim.test
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,4 +44,8 @@ class PhotoFragment : Fragment() {
             }
         }
     }
+
+//    override fun getTheme(): Int {
+//        return R.style.DialogTheme
+//    }
 }

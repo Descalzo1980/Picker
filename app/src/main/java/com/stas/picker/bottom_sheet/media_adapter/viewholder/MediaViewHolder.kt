@@ -6,12 +6,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.color.MaterialColors
 import com.stas.picker.R
 import com.stas.picker.bottom_sheet.media_adapter.RecyclerViewAdapter
-import com.stas.picker.databinding.RvPickerPhotoItemBinding
+import com.stas.picker.databinding.RvPickerMediaItemBinding
+import com.stas.picker.model.EMPTY_STRING
 import com.stas.picker.model.MediaItem
+import com.stas.picker.utils.invisible
 import com.stas.picker.utils.visible
 
-class PhotoViewHolder(
-    private val binding: RvPickerPhotoItemBinding,
+class MediaViewHolder(
+    private val binding: RvPickerMediaItemBinding,
     private val listener: RecyclerViewAdapter.Listener
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -25,6 +27,7 @@ class PhotoViewHolder(
 
     fun bind(item: MediaItem) {
         this.item = item
+        itemView.transitionName = "test${item.uri}"
         binding.apply {
             Glide.with(itemView.context)
                 .load(item.uri)
@@ -35,11 +38,12 @@ class PhotoViewHolder(
             ivMediaItem.setOnClickListener {
                 listener.onMediaClick(item)
             }
-            bindFavoriteState(item)
+            bindChooseState(item)
+            bindVideoLength()
         }
     }
 
-    fun bindFavoriteState(item: MediaItem) {
+    fun bindChooseState(item: MediaItem) {
         binding.apply {
             if (item.choosePosition > 0) {
                 tvItemCount.visible(true)
@@ -55,6 +59,17 @@ class PhotoViewHolder(
                 ivItemCount.alpha = 0.5f
             }
             tvItemCount.text = item.choosePosition.toString()
+        }
+    }
+
+    private fun bindVideoLength() {
+        binding.apply {
+            if (item.length != EMPTY_STRING) {
+                tvTime.text = item.length
+                cvTimeStamp.invisible(true)
+            } else {
+                cvTimeStamp.invisible(false)
+            }
         }
     }
 }
