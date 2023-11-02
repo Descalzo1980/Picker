@@ -5,6 +5,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <include
+        layout="@layout/item_toolbar"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvChooseCount"
                 android:layout_width="match_parent"
@@ -22,12 +29,9 @@
                 android:id="@+id/revMediaPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constrainedHeight="true"
-                app:layout_constraintHeight_default="wrap"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvChooseCount"
-                tools:listitem="@layout/rv_picker_photo_item" />
+                tools:listitem="@layout/rv_picker_media_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

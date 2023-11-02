@@ -22,7 +22,7 @@ object DatabaseBuilder {
         Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,
-            "files.db"
+            "kek.db"
         ).build()
 
 }

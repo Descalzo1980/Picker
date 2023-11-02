@@ -7,19 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.stas.picker.bottom_sheet.ui.PickerBottomSheetFragment
 import com.stas.picker.databinding.FragmentPickerBinding
 import com.stas.picker.model.MediaPath
 import com.stas.picker.utils.toDate
-import com.stas.picker.utils.toMediaItem
-import com.stas.picker.view_model.PickerViewModel
 
 class PickerFragment : Fragment() {
 
     private var binding: FragmentPickerBinding? = null
-    private lateinit var viewModel: PickerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,13 +26,10 @@ class PickerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[PickerViewModel::class.java]
         binding?.showBottomSheetButton?.setOnClickListener {
             val dialog = PickerBottomSheetFragment()
-            viewModel.setList(getMediaUris().toMediaItem())
             dialog.show(childFragmentManager, null)
         }
-
     }
 
     private fun getMediaUris(): List<MediaPath> {
