@@ -204,6 +204,7 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun getDefaultRefreshRate() {
+        if (defaultRefreshRate != 0f) return
         val display = (context?.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager).getDisplay(Display.DEFAULT_DISPLAY)
         Logger.log("freshRate = ${display.refreshRate}")
         defaultRefreshRate = display.refreshRate
