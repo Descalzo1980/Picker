@@ -78,6 +78,7 @@ class MediaPickerFragment : Fragment() {
             setHasFixedSize(true)
             this.layoutManager = layoutManager
             addItemDecoration(decorator)
+
         }
 
         collectFlowLatest(viewModel.chosenItems) {
