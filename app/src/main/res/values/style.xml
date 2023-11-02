@@ -12,9 +12,6 @@
         <item name="android:windowIsFloating">false</item>
     </style>
 
-    <style name="DialogAnim">
-        <item name="android:windowEnterAnimation">@anim/test</item>
-    </style>
 
     <style name="FullScreenDialog">
         <item name="android:windowFullscreen">true</item>
