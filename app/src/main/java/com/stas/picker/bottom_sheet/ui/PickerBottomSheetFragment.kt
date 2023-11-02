@@ -1,11 +1,15 @@
 package com.stas.picker.bottom_sheet.ui
 
 import android.content.ContentUris
+import android.content.Context
+import android.hardware.display.DisplayManager
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -17,17 +21,17 @@ import com.stas.picker.R
 import com.stas.picker.bottom_sheet.view_model.PickerViewModel
 import com.stas.picker.databinding.PickerBottomSheetBinding
 import com.stas.picker.model.MediaPath
-import com.stas.picker.utils.invisible
 import com.stas.picker.utils.showAnimation
 import com.stas.picker.utils.toDate
 import com.stas.picker.utils.toMediaItem
-import com.stas.picker.utils.visible
+
 
 class PickerBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: PickerBottomSheetBinding
     private lateinit var viewModel: PickerViewModel
     private var alertDialog: MaterialAlertDialogBuilder? = null
+    private var defaultRefreshRate: Float = 0f
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +44,8 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getDefaultRefreshRate()
+        setFreshRate(BOTTOM_SHEET_RATE)
         viewModel = ViewModelProvider(requireActivity())[PickerViewModel::class.java]
         if (viewModel.listItems.value.isEmpty()) {
             viewModel.setList(getMediaUris().toMediaItem())
@@ -183,5 +189,27 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                 dialog?.dismiss()
             }
         alertDialog?.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        setFreshRate(defaultRefreshRate)
+    }
+
+    private fun setFreshRate(refreshRate: Float) {
+        val window = requireActivity().window
+        val layoutParams = window.attributes
+        layoutParams.preferredRefreshRate = refreshRate
+        window.attributes = layoutParams
+    }
+
+    private fun getDefaultRefreshRate() {
+        val display = (context?.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager).getDisplay(Display.DEFAULT_DISPLAY)
+        Logger.log("freshRate = ${display.refreshRate}")
+        defaultRefreshRate = display.refreshRate
+    }
+
+    companion object {
+        private const val BOTTOM_SHEET_RATE = 60f
     }
 }

@@ -19,7 +19,6 @@ class PhotoFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.FullScreenDialog)
-        dialog?.window?.attributes?.windowAnimations = R.anim.test
     }
 
     override fun onCreateView(

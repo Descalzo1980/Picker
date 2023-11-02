@@ -1,5 +1,6 @@
 package com.stas.picker.bottom_sheet.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Display
@@ -8,6 +9,7 @@ import android.view.Surface
 import android.view.SurfaceControl
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
