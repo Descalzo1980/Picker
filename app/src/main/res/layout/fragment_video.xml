@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".VideoFragment">
+    tools:context=".bottom_sheet.ui.media_preview.VideoFragment">
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/playerView"

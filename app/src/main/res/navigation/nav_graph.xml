@@ -17,15 +17,16 @@
             android:id="@+id/action_pickerFragment_to_videoFragment"
             app:destination="@id/videoFragment" />
     </fragment>
+
     <dialog
         android:id="@+id/photoVideoFragment"
-        android:name="com.stas.picker.PhotoFragment"
+        android:name="com.stas.picker.bottom_sheet.ui.media_preview.PhotoFragment"
         android:label="fragment_photo_video"
         tools:layout="@layout/fragment_photo" />
 
     <fragment
         android:id="@+id/videoFragment"
-        android:name="com.stas.picker.VideoFragment"
+        android:name="com.stas.picker.bottom_sheet.ui.media_preview.VideoFragment"
         android:label="fragment_video"
         tools:layout="@layout/fragment_video" />
 </navigation>

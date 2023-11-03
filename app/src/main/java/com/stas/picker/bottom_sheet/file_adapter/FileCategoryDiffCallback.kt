@@ -1,7 +1,7 @@
 package com.stas.picker.bottom_sheet.file_adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.stas.picker.FileType
+import com.stas.picker.model.FileType
 
 
 class FileCategoryDiffCallback : DiffUtil.ItemCallback<FileType>() {

@@ -1,7 +1,6 @@
-package com.stas.picker
+package com.stas.picker.room.repository
 
 import com.stas.picker.room.FileItem
-import kotlinx.coroutines.flow.Flow
 
 interface FileRepository {
 

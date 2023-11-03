@@ -1,11 +1,8 @@
-package com.stas.picker
+package com.stas.picker.room.repository
 
 import com.stas.picker.room.AppDatabase
 import com.stas.picker.room.FileItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 class FileRepositoryImpl(private val appDatabase: AppDatabase) : FileRepository {

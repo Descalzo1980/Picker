@@ -2,10 +2,10 @@ package com.stas.picker.bottom_sheet.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.stas.picker.FileRepository
-import com.stas.picker.FileType
+import com.stas.picker.room.repository.FileRepository
+import com.stas.picker.model.FileType
 import com.stas.picker.room.FileItem
-import com.stas.picker.utils.toFileType
+import com.stas.picker.utils.mapper.toFileType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

@@ -1,8 +1,6 @@
-package com.stas.picker
+package com.stas.picker.model
 
-import android.net.Uri
 import androidx.annotation.DrawableRes
-import com.stas.picker.model.EMPTY_STRING
 
 data class FileType(
     val uri: String,

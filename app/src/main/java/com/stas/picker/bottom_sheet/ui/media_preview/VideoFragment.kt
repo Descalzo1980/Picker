@@ -1,23 +1,22 @@
-package com.stas.picker
+package com.stas.picker.bottom_sheet.ui.media_preview
 
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSource
 import com.stas.picker.PickerFragment.Companion.VIDEO_ITEM
+import com.stas.picker.R
 import com.stas.picker.databinding.FragmentVideoBinding
 
 
-class VideoFragment : Fragment() {
+class VideoFragment : DialogFragment() {
 
 
     private var binding: FragmentVideoBinding? = null
@@ -25,9 +24,13 @@ class VideoFragment : Fragment() {
     private var videoFragment: String? = null
 
     private var exoPlayer: ExoPlayer? = null
-    private val isPlaying get() = exoPlayer?.isPlaying ?: false
     private var playbackPosition = 0L
     private var playWhenReady = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, R.style.FullScreenDialog)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
