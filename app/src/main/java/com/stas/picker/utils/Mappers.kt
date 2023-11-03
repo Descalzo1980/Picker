@@ -1,6 +1,7 @@
 package com.stas.picker.utils
 
 import com.stas.picker.FileType
+import com.stas.picker.R
 import com.stas.picker.model.MediaItem
 import com.stas.picker.model.MediaPath
 import com.stas.picker.room.FileItem
@@ -24,9 +25,45 @@ fun List<MediaPath>.toMediaItem(): MutableList<MediaItem> {
 
 fun MediaPath.toMedia(): MediaItem {
     return if (this.isVideo) {
-        MediaItem(this.uri, length = SimpleDateFormat("mm:ss", Locale.getDefault()).format(Date(this.duration)))
+        MediaItem(this.uri, length = SimpleDateFormat("mm:ss", Locale.getDefault()).format(Date(this.duration)), image = chooseImageDrawable())
     } else {
-        MediaItem(this.uri)
+        MediaItem(this.uri, image = chooseImageDrawable())
+    }
+}
+
+fun chooseImageDrawable(int: Int = 0): Int {
+    return when(int) {
+        1 -> R.drawable.ic_1
+        2 -> R.drawable.ic_2
+        3 -> R.drawable.ic_3
+        4 -> R.drawable.ic_4
+        5 -> R.drawable.ic_5
+        6 -> R.drawable.ic_6
+        7 -> R.drawable.ic_7
+        8 -> R.drawable.ic_8
+        9 -> R.drawable.ic_9
+        10 -> R.drawable.ic_10
+        11 -> R.drawable.ic_11
+        12 -> R.drawable.ic_12
+        13 -> R.drawable.ic_13
+        14 -> R.drawable.ic_14
+        15 -> R.drawable.ic_15
+        16 -> R.drawable.ic_16
+        17 -> R.drawable.ic_17
+        18 -> R.drawable.ic_18
+        19 -> R.drawable.ic_19
+        20 -> R.drawable.ic_20
+        21 -> R.drawable.ic_21
+        22 -> R.drawable.ic_22
+        23 -> R.drawable.ic_23
+        24 -> R.drawable.ic_24
+        25 -> R.drawable.ic_25
+        26 -> R.drawable.ic_26
+        27 -> R.drawable.ic_27
+        28 -> R.drawable.ic_28
+        29 -> R.drawable.ic_29
+        30 -> R.drawable.ic_30
+        else -> R.drawable.ic_test
     }
 }
 

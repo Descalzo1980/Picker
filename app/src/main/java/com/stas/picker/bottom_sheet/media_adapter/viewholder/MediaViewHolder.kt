@@ -45,20 +45,7 @@ class MediaViewHolder(
 
     fun bindChooseState(item: MediaItem) {
         binding.apply {
-            if (item.choosePosition > 0) {
-                tvItemCount.visible(true)
-                ivItemCount.setCardBackgroundColor(
-                    binding.root.context.getColor(R.color.blue)
-                )
-                ivItemCount.strokeColor = binding.root.context.resources.getColor(R.color.white)
-                ivItemCount.alpha = 1f
-            } else {
-                tvItemCount.visible(false)
-                ivItemCount.setCardBackgroundColor(MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorSurface))
-                ivItemCount.strokeColor = binding.root.context.resources.getColor(R.color.white)
-                ivItemCount.alpha = 0.5f
-            }
-            tvItemCount.text = item.choosePosition.toString()
+            ivItemCount.setBackgroundResource(item.image)
         }
     }
 
