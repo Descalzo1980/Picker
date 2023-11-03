@@ -1,4 +1,4 @@
-package com.stas.picker
+package com.stas.picker.utils.logger
 
 import android.util.Log
 
@@ -8,5 +8,5 @@ object Logger {
         Log.d(TAG, text)
     }
 
-    const val TAG = "MYTAGMYTAG"
+    private const val TAG = "MYTAGMYTAG"
 }

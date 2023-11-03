@@ -1,10 +1,11 @@
-package com.stas.picker.utils
+package com.stas.picker.utils.mapper
 
-import com.stas.picker.FileType
+import com.stas.picker.model.FileType
 import com.stas.picker.R
 import com.stas.picker.model.MediaItem
 import com.stas.picker.model.MediaPath
 import com.stas.picker.room.FileItem
+import com.stas.picker.utils.extension.checkFileType
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -98,11 +99,12 @@ fun Long.toSize(): String {
     }
     val units = arrayOf("B", "KB", "MB", "GB", "TB")
     val digitGroups = (log10(this.toFloat()) / log10(DEFAULT_SIZE)).toInt()
-    return (DecimalFormat("#,##0.#").format(this / DEFAULT_SIZE.pow(digitGroups.toDouble()))
+    return (DecimalFormat(SIZE_PATTERN).format(this / DEFAULT_SIZE.pow(digitGroups.toDouble()))
             + " " + units[digitGroups])
 
 }
 
 const val DEFAULT_SIZE = 1024.0
 const val EMPTY_SIZE = "0"
+const val SIZE_PATTERN = "#,##0.#"
 

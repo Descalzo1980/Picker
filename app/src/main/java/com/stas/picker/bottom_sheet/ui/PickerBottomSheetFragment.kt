@@ -16,14 +16,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.stas.picker.Logger
+import com.stas.picker.utils.logger.Logger
 import com.stas.picker.R
 import com.stas.picker.bottom_sheet.view_model.PickerViewModel
 import com.stas.picker.databinding.PickerBottomSheetBinding
 import com.stas.picker.model.MediaPath
-import com.stas.picker.utils.showAnimation
-import com.stas.picker.utils.toDate
-import com.stas.picker.utils.toMediaItem
+import com.stas.picker.utils.anim.showAnimation
+import com.stas.picker.utils.mapper.toDate
+import com.stas.picker.utils.mapper.toMediaItem
 
 
 class PickerBottomSheetFragment : BottomSheetDialogFragment() {
@@ -32,9 +32,6 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var viewModel: PickerViewModel
     private var alertDialog: MaterialAlertDialogBuilder? = null
     private var defaultRefreshRate: Float = 0f
-//    val behavior by lazy { (dialog as BottomSheetDialog?)?.behavior }
-//    val originalHeight = 1500 // current height
-//    val updatedHeight = 1500 // desired height
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,26 +77,17 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                 }
 
                 R.id.location -> {
+                    Logger.log("Not implemented yet")
                     true
                 }
 
                 else -> {
-                    Logger.log("FUCK YOU")
+                    Logger.log("Not implemented yet")
                     false}
             }
         }
         binding.nav.selectedItemId = R.id.gallery
     }
-
-//    private fun updatePeekHeight(originalHeight: Int, updatedHeight: Int) {
-//        ValueAnimator.ofInt(originalHeight, updatedHeight).apply {
-//            addUpdateListener {
-//                behavior?.peekHeight = it.animatedValue as Int
-//            }
-//            duration = 1300
-//            start()
-//        }
-//    }
 
     override fun onStart() {
         super.onStart()
@@ -207,6 +195,11 @@ class PickerBottomSheetFragment : BottomSheetDialogFragment() {
                 dialog?.dismiss()
             }
         alertDialog?.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setFreshRate(BOTTOM_SHEET_RATE)
     }
 
     override fun onDestroy() {

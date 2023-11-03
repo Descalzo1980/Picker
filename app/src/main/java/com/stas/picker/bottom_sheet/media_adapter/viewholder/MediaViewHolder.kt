@@ -3,14 +3,12 @@ package com.stas.picker.bottom_sheet.media_adapter.viewholder
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.google.android.material.color.MaterialColors
 import com.stas.picker.R
 import com.stas.picker.bottom_sheet.media_adapter.RecyclerViewAdapter
 import com.stas.picker.databinding.RvPickerMediaItemBinding
 import com.stas.picker.model.EMPTY_STRING
 import com.stas.picker.model.MediaItem
-import com.stas.picker.utils.invisible
-import com.stas.picker.utils.visible
+import com.stas.picker.utils.extension.invisible
 
 class MediaViewHolder(
     private val binding: RvPickerMediaItemBinding,
@@ -20,14 +18,13 @@ class MediaViewHolder(
     lateinit var item: MediaItem
 
     init {
-        binding.ivItemCount.setOnClickListener() {
+        binding.vChooseClick.setOnClickListener() {
             listener.onPickItemClick(item)
         }
     }
 
     fun bind(item: MediaItem) {
         this.item = item
-        itemView.transitionName = "test${item.uri}"
         binding.apply {
             Glide.with(itemView.context)
                 .load(item.uri)

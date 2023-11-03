@@ -2,7 +2,7 @@ package com.stas.picker.bottom_sheet.view_model
 
 import androidx.lifecycle.ViewModel
 import com.stas.picker.model.MediaItem
-import com.stas.picker.utils.chooseImageDrawable
+import com.stas.picker.utils.mapper.chooseImageDrawable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

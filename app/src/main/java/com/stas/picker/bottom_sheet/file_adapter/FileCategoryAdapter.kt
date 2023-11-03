@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.stas.picker.FileType
+import com.stas.picker.model.FileType
 import com.stas.picker.bottom_sheet.file_adapter.viewholder.FileCategoryViewHolder
 import com.stas.picker.databinding.ItemFileCategoryBinding
 

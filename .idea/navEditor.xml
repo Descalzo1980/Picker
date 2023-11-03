@@ -36,6 +36,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_pickerFragment_to_videoFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -46,8 +51,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="538" />
-                            <option name="y" value="-17" />
+                            <option name="x" value="509" />
+                            <option name="y" value="10" />
                           </Point>
                         </option>
                       </LayoutPositions>

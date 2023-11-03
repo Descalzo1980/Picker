@@ -1,4 +1,4 @@
-package com.stas.picker
+package com.stas.picker.bottom_sheet.ui.media_preview
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
+import com.stas.picker.PickerFragment
+import com.stas.picker.R
 import com.stas.picker.databinding.FragmentPhotoBinding
-import com.stas.picker.utils.anim.TransitionsHandler
 
 class PhotoFragment : DialogFragment() {
 
@@ -18,7 +19,7 @@ class PhotoFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.FullScreenDialog)
+        setStyle(STYLE_NO_TITLE, R.style.FullScreenDialog)
     }
 
     override fun onCreateView(
@@ -43,8 +44,4 @@ class PhotoFragment : DialogFragment() {
             }
         }
     }
-
-//    override fun getTheme(): Int {
-//        return R.style.DialogTheme
-//    }
 }

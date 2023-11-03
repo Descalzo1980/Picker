@@ -1,4 +1,4 @@
-package com.stas.picker.utils
+package com.stas.picker.utils.extension
 
 import android.content.Context
 import android.net.Uri
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.stas.picker.FileType
+import com.stas.picker.model.FileType
 import com.stas.picker.model.FileCategory
 import com.stas.picker.utils.UIConstants.ALLOWABLE_MIMES_IMAGE
 import com.stas.picker.utils.UIConstants.ALLOWABLE_MIMES_VIDEO
